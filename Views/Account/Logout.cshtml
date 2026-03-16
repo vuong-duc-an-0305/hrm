@@ -1,0 +1,35 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng xuất - Hệ thống Quản lý Nhân sự</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-900 min-h-screen w-full flex items-center justify-center" style="font-family: 'Inter', sans-serif;">
+    <div class="w-full max-w-sm px-8 py-10 bg-white rounded-2xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.1)] border border-gray-100 text-center">
+        <h1 class="text-xl font-semibold text-gray-900 mb-2">Đăng xuất</h1>
+        <p class="text-sm text-gray-500 mb-6">Bạn có chắc chắn muốn đăng xuất khỏi hệ thống?</p>
+        <div class="flex gap-3">
+            <a asp-controller="Dashboard" asp-action="Index" class="flex-1 bg-gray-100 text-gray-700 hover:bg-gray-200 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors text-center">Quay lại</a>
+            <button onclick="doLogout()" class="flex-1 bg-red-600 text-white hover:bg-red-700 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors">Đăng xuất</button>
+        </div>
+
+        <script>
+        async function doLogout() {
+            try {
+                const res = await fetch('/Account/LogoutApi', { method: 'POST' });
+                const data = await res.json();
+                if (data.success) window.location.href = data.redirectUrl;
+            } catch (e) {
+                window.location.href = '/Account/Login';
+            }
+        }
+        </script>
+    </div>
+</body>
+</html>

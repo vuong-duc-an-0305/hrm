@@ -1,0 +1,101 @@
+@model IEnumerable<NghiPhep>
+@{
+    ViewData["Title"] = "Quản lý nghỉ phép";
+}
+
+<div class="space-y-6">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <p class="text-sm text-gray-500">Theo dõi và duyệt đơn nghỉ phép của nhân viên</p>
+        <a asp-action="Create" class="inline-flex items-center gap-2 bg-gray-900 text-white hover:bg-gray-800 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors">
+            <iconify-icon icon="solar:add-circle-linear" width="18"></iconify-icon>
+            Tạo đơn nghỉ phép
+        </a>
+    </div>
+
+    <form method="get" class="grid grid-cols-1 md:grid-cols-4 gap-3">
+        <div class="md:col-span-2 relative">
+            <iconify-icon icon="solar:magnifer-linear" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" width="16"></iconify-icon>
+            <input type="text" name="search" value="@ViewData["Search"]" placeholder="Tìm theo tên nhân viên..." class="w-full bg-white border border-gray-200 rounded-lg pl-9 pr-4 py-2 text-sm focus:outline-none focus:border-gray-400">
+        </div>
+        <select name="trangThai" class="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-gray-400">
+            <option value="">-- Tất cả trạng thái --</option>
+            <option value="Chờ duyệt" selected="@(ViewData["TrangThai"]?.ToString() == "Chờ duyệt")">Chờ duyệt</option>
+            <option value="Đã duyệt" selected="@(ViewData["TrangThai"]?.ToString() == "Đã duyệt")">Đã duyệt</option>
+            <option value="Từ chối" selected="@(ViewData["TrangThai"]?.ToString() == "Từ chối")">Từ chối</option>
+        </select>
+        <button type="submit" class="bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-lg text-sm font-medium transition-colors">Lọc</button>
+    </form>
+
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)] overflow-hidden">
+        <table class="w-full text-sm">
+            <thead>
+                <tr class="border-b border-gray-100">
+                    <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase">Nhân viên</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase hidden md:table-cell">Thời gian</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase hidden lg:table-cell">Lý do</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase">Số ngày</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase">Trạng thái</th>
+                    <th class="text-right px-6 py-3 text-xs font-medium text-gray-500 uppercase">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-50">
+                @foreach (var item in Model)
+                {
+                    var badgeClass = item.TrangThai == "Đã duyệt"
+                        ? "bg-emerald-50 text-emerald-600"
+                        : item.TrangThai == "Từ chối"
+                            ? "bg-red-50 text-red-600"
+                            : "bg-amber-50 text-amber-700";
+
+                    <tr class="hover:bg-gray-50/50 transition-colors">
+                        <td class="px-6 py-4 font-medium text-gray-900">@item.NhanVien?.HoTen</td>
+                        <td class="px-6 py-4 text-gray-600 hidden md:table-cell">
+                            @item.TuNgay.ToString("dd/MM/yyyy") - @item.DenNgay.ToString("dd/MM/yyyy")
+                        </td>
+                        <td class="px-6 py-4 text-gray-500 hidden lg:table-cell">@(string.IsNullOrWhiteSpace(item.LyDo) ? "-" : item.LyDo)</td>
+                        <td class="px-6 py-4 text-gray-700">@item.SoNgayNghi ngày</td>
+                        <td class="px-6 py-4">
+                            <span class="text-xs px-2 py-0.5 rounded-md font-medium @badgeClass">@item.TrangThai</span>
+                        </td>
+                        <td class="px-6 py-4 text-right">
+                            <div class="inline-flex items-center gap-2">
+                                @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                                {
+                                    <a asp-action="Edit" asp-route-id="@item.MaNghiPhep" class="text-gray-400 hover:text-blue-600 transition-colors" title="Sửa">
+                                        <iconify-icon icon="solar:pen-linear" width="18"></iconify-icon>
+                                    </a>
+
+                                    <form asp-action="UpdateTrangThai" method="post" class="inline-flex items-center gap-1">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@item.MaNghiPhep" />
+                                        <select name="trangThai" onchange="this.form.submit()" class="text-xs border border-gray-200 rounded-md px-2 py-1">
+                                            <option value="Chờ duyệt" selected="@(item.TrangThai == "Chờ duyệt")">Chờ duyệt</option>
+                                            <option value="Đã duyệt" selected="@(item.TrangThai == "Đã duyệt")">Đã duyệt</option>
+                                            <option value="Từ chối" selected="@(item.TrangThai == "Từ chối")">Từ chối</option>
+                                        </select>
+                                    </form>
+
+                                    <form asp-action="Delete" method="post" onsubmit="return confirm('Bạn có chắc muốn xóa đơn nghỉ phép này?');">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@item.MaNghiPhep" />
+                                        <button type="submit" class="text-gray-400 hover:text-red-600 transition-colors" title="Xóa">
+                                            <iconify-icon icon="solar:trash-bin-trash-linear" width="18"></iconify-icon>
+                                        </button>
+                                    </form>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        @if (!Model.Any())
+        {
+            <div class="text-center py-12 text-gray-400">
+                <iconify-icon icon="solar:calendar-mark-linear" width="48" class="mb-2"></iconify-icon>
+                <p class="text-sm">Chưa có đơn nghỉ phép nào</p>
+            </div>
+        }
+    </div>
+</div>

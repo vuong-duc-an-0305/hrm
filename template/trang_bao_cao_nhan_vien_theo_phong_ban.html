@@ -1,0 +1,363 @@
+<html lang="vi"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo cáo nhân sự - Hệ thống Quản lý Nhân sự</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-900 h-screen w-full flex overflow-hidden selection:bg-gray-200 selection:text-gray-900 antialiased" style="font-family: 'Inter', sans-serif;">
+
+    <!-- Sidebar (Desktop) -->
+    <aside class="w-64 bg-white border-r border-gray-200 flex-col hidden md:flex h-full relative z-20">
+        <!-- Logo -->
+        <div class="h-16 flex items-center px-6 border-b border-gray-100/50">
+            <div class="h-8 w-8 bg-gray-900 rounded-lg flex items-center justify-center text-white mr-3">
+                <span class="text-xs font-semibold tracking-tighter">HRM</span>
+            </div>
+            <span class="text-sm font-semibold tracking-tight text-gray-900">Doanh Nghiệp</span>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-500 hover:text-gray-900 hover:bg-gray-50 rounded-lg text-sm transition-colors">
+                <iconify-icon icon="solar:widget-5-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Tổng quan
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-500 hover:text-gray-900 hover:bg-gray-50 rounded-lg text-sm transition-colors">
+                <iconify-icon icon="solar:users-group-rounded-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Nhân viên
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-500 hover:text-gray-900 hover:bg-gray-50 rounded-lg text-sm transition-colors">
+                <iconify-icon icon="solar:clipboard-check-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Đánh giá
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-500 hover:text-gray-900 hover:bg-gray-50 rounded-lg text-sm transition-colors">
+                <iconify-icon icon="solar:city-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Phòng ban
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 bg-gray-50 text-gray-900 rounded-lg text-sm font-medium transition-colors">
+                <iconify-icon icon="solar:pie-chart-2-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Báo cáo
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-500 hover:text-gray-900 hover:bg-gray-50 rounded-lg text-sm transition-colors">
+                <iconify-icon icon="solar:document-text-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Hợp đồng
+            </a>
+            <div class="pt-4 mt-4 border-t border-gray-100"></div>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-500 hover:text-gray-900 hover:bg-gray-50 rounded-lg text-sm transition-colors">
+                <iconify-icon icon="solar:settings-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Cài đặt
+            </a>
+        </nav>
+
+        <!-- User profile snippet -->
+        <div class="p-4 border-t border-gray-100">
+            <div class="flex items-center gap-3 px-2 py-2 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                <div class="h-8 w-8 rounded-full bg-gray-200 border border-gray-300 flex items-center justify-center overflow-hidden">
+                    <iconify-icon icon="solar:user-rounded-linear" class="text-gray-500" width="16" stroke-width="1.5"></iconify-icon>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-gray-900 truncate">Admin</p>
+                    <p class="text-xs text-gray-500 truncate">Quản trị viên</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-full min-w-0 bg-gray-50/50">
+        <!-- Top Header -->
+        <header class="h-16 bg-white/80 backdrop-blur-md border-b border-gray-200 flex items-center justify-between px-6 lg:px-10 sticky top-0 z-10">
+            <div class="flex items-center gap-4">
+                <button class="md:hidden text-gray-500 hover:text-gray-900">
+                    <iconify-icon icon="solar:hamburger-menu-linear" width="24" stroke-width="1.5"></iconify-icon>
+                </button>
+                <div class="flex items-center gap-2 text-sm">
+                    <span class="text-gray-500">Nhân sự</span>
+                    <iconify-icon icon="solar:alt-arrow-right-linear" width="14" class="text-gray-400"></iconify-icon>
+                    <span class="text-gray-500">Báo cáo</span>
+                    <iconify-icon icon="solar:alt-arrow-right-linear" width="14" class="text-gray-400"></iconify-icon>
+                    <h1 class="font-semibold tracking-tight text-gray-900">Theo phòng ban</h1>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <button class="relative text-gray-500 hover:text-gray-900 transition-colors">
+                    <iconify-icon icon="solar:bell-linear" width="22" stroke-width="1.5"></iconify-icon>
+                </button>
+            </div>
+        </header>
+
+        <!-- Page Content -->
+        <div class="flex-1 overflow-y-auto p-6 lg:p-10">
+            <div class="max-w-6xl mx-auto space-y-8 pb-10">
+                
+                <!-- Page Header & Actions -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h2 class="text-xl font-semibold tracking-tight text-gray-900">Thống kê nhân sự theo phòng ban</h2>
+                        <p class="text-sm text-gray-500 mt-0.5">Tổng quan về số lượng và phân bổ nhân sự trên toàn hệ thống.</p>
+                    </div>
+                    
+                    <div class="flex items-center gap-3">
+                        <!-- Filter Dropdown -->
+                        <div class="relative w-full sm:w-56">
+                            <select class="w-full appearance-none bg-white border border-gray-200 rounded-lg pl-9 pr-8 py-2 text-sm font-medium text-gray-700 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400/20 transition-all shadow-[0_1px_2px_rgba(0,0,0,0.03)] cursor-pointer">
+                                <option value="all" selected="">Tất cả phòng ban</option>
+                                <option value="kd">Phòng Kinh doanh</option>
+                                <option value="kt">Phòng Kỹ thuật</option>
+                                <option value="mkt">Phòng Marketing</option>
+                                <option value="hr">Phòng Hành chính - Nhân sự</option>
+                            </select>
+                            <iconify-icon icon="solar:filter-linear" width="16" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></iconify-icon>
+                            <iconify-icon icon="solar:alt-arrow-down-linear" width="16" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></iconify-icon>
+                        </div>
+
+                        <!-- Export Button -->
+                        <button class="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-gray-300 transition-all shadow-[0_1px_2px_rgba(0,0,0,0.03)] whitespace-nowrap">
+                            <iconify-icon icon="solar:export-linear" width="18"></iconify-icon>
+                            Xuất báo cáo
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-[0_1px_2px_rgba(0,0,0,0.03)]">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-sm font-medium text-gray-500">Tổng nhân sự</h3>
+                            <div class="h-8 w-8 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600">
+                                <iconify-icon icon="solar:users-group-rounded-linear" width="18" stroke-width="1.5"></iconify-icon>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex items-baseline gap-2">
+                            <span class="text-3xl font-semibold tracking-tight text-gray-900">156</span>
+                            <span class="text-sm font-medium text-emerald-600 flex items-center">
+                                <iconify-icon icon="solar:arrow-right-up-linear" width="14"></iconify-icon>
+                                12%
+                            </span>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1">So với tháng trước</p>
+                    </div>
+
+                    <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-[0_1px_2px_rgba(0,0,0,0.03)]">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-sm font-medium text-gray-500">Số lượng phòng ban</h3>
+                            <div class="h-8 w-8 rounded-lg bg-purple-50 flex items-center justify-center text-purple-600">
+                                <iconify-icon icon="solar:city-linear" width="18" stroke-width="1.5"></iconify-icon>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex items-baseline gap-2">
+                            <span class="text-3xl font-semibold tracking-tight text-gray-900">08</span>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1">Đang hoạt động</p>
+                    </div>
+
+                    <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-[0_1px_2px_rgba(0,0,0,0.03)]">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-sm font-medium text-gray-500">Phòng ban đông nhất</h3>
+                            <div class="h-8 w-8 rounded-lg bg-orange-50 flex items-center justify-center text-orange-600">
+                                <iconify-icon icon="solar:star-fall-minimalistic-2-linear" width="18" stroke-width="1.5"></iconify-icon>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <span class="text-xl font-semibold tracking-tight text-gray-900">Kinh doanh</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-1">45 nhân sự (Chiếm 28.8%)</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Visual Chart Area -->
+                    <div class="lg:col-span-1 bg-white rounded-xl border border-gray-200 shadow-[0_1px_2px_rgba(0,0,0,0.03)] p-6">
+                        <h3 class="text-base font-semibold tracking-tight text-gray-900 mb-6 flex items-center gap-2">
+                            <iconify-icon icon="solar:chart-square-linear" width="20" class="text-gray-400"></iconify-icon>
+                            Tỷ lệ phân bổ
+                        </h3>
+                        
+                        <!-- Pseudo Bar Chart -->
+                        <div class="space-y-5">
+                            <div>
+                                <div class="flex justify-between items-end mb-1.5">
+                                    <span class="text-sm font-medium text-gray-900">Kinh doanh</span>
+                                    <span class="text-xs font-medium text-gray-500">28.8%</span>
+                                </div>
+                                <div class="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+                                    <div class="h-full bg-gray-900 rounded-full" style="width: 28.8%"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between items-end mb-1.5">
+                                    <span class="text-sm font-medium text-gray-900">Kỹ thuật</span>
+                                    <span class="text-xs font-medium text-gray-500">24.4%</span>
+                                </div>
+                                <div class="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+                                    <div class="h-full bg-gray-700 rounded-full" style="width: 24.4%"></div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between items-end mb-1.5">
+                                    <span class="text-sm font-medium text-gray-900">Marketing</span>
+                                    <span class="text-xs font-medium text-gray-500">19.2%</span>
+                                </div>
+                                <div class="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+                                    <div class="h-full bg-gray-500 rounded-full" style="width: 19.2%"></div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between items-end mb-1.5">
+                                    <span class="text-sm font-medium text-gray-900">Hành chính - NS</span>
+                                    <span class="text-xs font-medium text-gray-500">12.8%</span>
+                                </div>
+                                <div class="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+                                    <div class="h-full bg-gray-400 rounded-full" style="width: 12.8%"></div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between items-end mb-1.5">
+                                    <span class="text-sm font-medium text-gray-900">Kế toán</span>
+                                    <span class="text-xs font-medium text-gray-500">8.3%</span>
+                                </div>
+                                <div class="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+                                    <div class="h-full bg-gray-300 rounded-full" style="width: 8.3%"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between items-end mb-1.5">
+                                    <span class="text-sm font-medium text-gray-900">Khác</span>
+                                    <span class="text-xs font-medium text-gray-500">6.5%</span>
+                                </div>
+                                <div class="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+                                    <div class="h-full bg-gray-200 rounded-full" style="width: 6.5%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Data Table Area -->
+                    <div class="lg:col-span-2 bg-white rounded-xl border border-gray-200 shadow-[0_1px_2px_rgba(0,0,0,0.03)] overflow-hidden flex flex-col">
+                        <div class="px-6 py-5 border-b border-gray-100 flex items-center justify-between">
+                            <h3 class="text-base font-semibold tracking-tight text-gray-900 flex items-center gap-2">
+                                <iconify-icon icon="solar:list-check-linear" width="20" class="text-gray-400"></iconify-icon>
+                                Chi tiết dữ liệu
+                            </h3>
+                        </div>
+                        
+                        <div class="overflow-x-auto flex-1">
+                            <table class="w-full text-left border-collapse min-w-[500px]">
+                                <thead>
+                                    <tr class="bg-gray-50/80 border-b border-gray-200">
+                                        <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-tight">Tên phòng ban</th>
+                                        <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-tight">Trưởng phòng</th>
+                                        <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-tight text-right">Số lượng</th>
+                                        <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-tight text-right">Tỷ lệ</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-100">
+                                    <tr class="hover:bg-gray-50/50 transition-colors">
+                                        <td class="px-6 py-4">
+                                            <div class="text-sm font-medium text-gray-900">Kinh doanh</div>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <div class="flex items-center gap-2">
+                                                <div class="h-6 w-6 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center text-[10px] font-medium text-gray-600">NV</div>
+                                                <span class="text-sm text-gray-600">Nguyễn Văn A</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 text-right">
+                                            <span class="text-sm font-medium text-gray-900">45</span>
+                                        </td>
+                                        <td class="px-6 py-4 text-right">
+                                            <span class="text-sm text-gray-500">28.8%</span>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="hover:bg-gray-50/50 transition-colors">
+                                        <td class="px-6 py-4">
+                                            <div class="text-sm font-medium text-gray-900">Kỹ thuật</div>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <div class="flex items-center gap-2">
+                                                <div class="h-6 w-6 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center text-[10px] font-medium text-gray-600">TL</div>
+                                                <span class="text-sm text-gray-600">Trần Lê B</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 text-right">
+                                            <span class="text-sm font-medium text-gray-900">38</span>
+                                        </td>
+                                        <td class="px-6 py-4 text-right">
+                                            <span class="text-sm text-gray-500">24.4%</span>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="hover:bg-gray-50/50 transition-colors">
+                                        <td class="px-6 py-4">
+                                            <div class="text-sm font-medium text-gray-900">Marketing</div>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <div class="flex items-center gap-2">
+                                                <div class="h-6 w-6 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center text-[10px] font-medium text-gray-600">LH</div>
+                                                <span class="text-sm text-gray-600">Lê Hoàng C</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 text-right">
+                                            <span class="text-sm font-medium text-gray-900">30</span>
+                                        </td>
+                                        <td class="px-6 py-4 text-right">
+                                            <span class="text-sm text-gray-500">19.2%</span>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="hover:bg-gray-50/50 transition-colors">
+                                        <td class="px-6 py-4">
+                                            <div class="text-sm font-medium text-gray-900">Hành chính - Nhân sự</div>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <div class="flex items-center gap-2">
+                                                <div class="h-6 w-6 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center text-[10px] font-medium text-gray-600">PM</div>
+                                                <span class="text-sm text-gray-600">Phạm Mai D</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 text-right">
+                                            <span class="text-sm font-medium text-gray-900">20</span>
+                                        </td>
+                                        <td class="px-6 py-4 text-right">
+                                            <span class="text-sm text-gray-500">12.8%</span>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr class="hover:bg-gray-50/50 transition-colors">
+                                        <td class="px-6 py-4">
+                                            <div class="text-sm font-medium text-gray-900">Kế toán</div>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <div class="flex items-center gap-2">
+                                                <div class="h-6 w-6 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center text-[10px] font-medium text-gray-600">HT</div>
+                                                <span class="text-sm text-gray-600">Hoàng Thị E</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 text-right">
+                                            <span class="text-sm font-medium text-gray-900">13</span>
+                                        </td>
+                                        <td class="px-6 py-4 text-right">
+                                            <span class="text-sm text-gray-500">8.3%</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+
+</body></html>

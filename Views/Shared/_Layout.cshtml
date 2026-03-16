@@ -1,0 +1,146 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - Hệ thống Quản lý Nhân sự</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    @RenderSection("Styles", required: false)
+</head>
+<body class="bg-gray-50 text-gray-900 h-screen w-full flex overflow-hidden selection:bg-gray-200 selection:text-gray-900" style="font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased;">
+
+    @{
+        var controller = ViewContext.RouteData.Values["controller"]?.ToString()?.ToLower();
+        var action = ViewContext.RouteData.Values["action"]?.ToString()?.ToLower();
+        var managerPhongBan = User.FindFirst("TenPhongBan")?.Value;
+        var isManagerOnly = User.IsInRole("Manager") && !User.IsInRole("Admin");
+    }
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white border-r border-gray-200 flex-col hidden md:flex h-full relative z-20">
+        <div class="h-16 flex items-center px-6 border-b border-gray-100/50">
+            <div class="h-8 w-8 bg-gray-900 rounded-lg flex items-center justify-center text-white mr-3">
+                <span class="text-xs font-semibold tracking-tighter">HRM</span>
+            </div>
+            <span class="text-sm font-semibold tracking-tight text-gray-900">Doanh Nghiệp</span>
+        </div>
+
+        <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
+            <a asp-controller="NhanVien" asp-action="Index" class="flex items-center gap-3 px-3 py-2.5 @(controller == "nhanvien" ? "bg-gray-50 text-gray-900 font-medium" : "text-gray-500 hover:text-gray-900 hover:bg-gray-50") rounded-lg text-sm transition-colors">
+                <iconify-icon icon="solar:users-group-rounded-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Nhân viên
+            </a>
+            <a asp-controller="HopDong" asp-action="Index" class="flex items-center gap-3 px-3 py-2.5 @(controller == "hopdong" ? "bg-gray-50 text-gray-900 font-medium" : "text-gray-500 hover:text-gray-900 hover:bg-gray-50") rounded-lg text-sm transition-colors">
+                <iconify-icon icon="solar:document-text-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Hợp đồng
+            </a>
+            <a asp-controller="DanhGia" asp-action="Index" class="flex items-center gap-3 px-3 py-2.5 @(controller == "danhgia" ? "bg-gray-50 text-gray-900 font-medium" : "text-gray-500 hover:text-gray-900 hover:bg-gray-50") rounded-lg text-sm transition-colors">
+                <iconify-icon icon="solar:star-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Đánh giá
+            </a>
+            <a asp-controller="NghiPhep" asp-action="Index" class="flex items-center gap-3 px-3 py-2.5 @(controller == "nghiphep" ? "bg-gray-50 text-gray-900 font-medium" : "text-gray-500 hover:text-gray-900 hover:bg-gray-50") rounded-lg text-sm transition-colors">
+                <iconify-icon icon="solar:calendar-mark-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Nghỉ phép
+            </a>
+
+            @if (!isManagerOnly)
+            {
+                <a asp-controller="Dashboard" asp-action="Index" class="flex items-center gap-3 px-3 py-2.5 @(controller == "dashboard" ? "bg-gray-50 text-gray-900 font-medium" : "text-gray-500 hover:text-gray-900 hover:bg-gray-50") rounded-lg text-sm transition-colors">
+                    <iconify-icon icon="solar:widget-5-linear" width="20" stroke-width="1.5"></iconify-icon>
+                    Tổng quan
+                </a>
+                <a asp-controller="PhongBan" asp-action="Index" class="flex items-center gap-3 px-3 py-2.5 @(controller == "phongban" ? "bg-gray-50 text-gray-900 font-medium" : "text-gray-500 hover:text-gray-900 hover:bg-gray-50") rounded-lg text-sm transition-colors">
+                    <iconify-icon icon="solar:city-linear" width="20" stroke-width="1.5"></iconify-icon>
+                    Phòng ban
+                </a>
+                <a asp-controller="TuyenDung" asp-action="Index" class="flex items-center gap-3 px-3 py-2.5 @(controller == "tuyendung" ? "bg-gray-50 text-gray-900 font-medium" : "text-gray-500 hover:text-gray-900 hover:bg-gray-50") rounded-lg text-sm transition-colors">
+                    <iconify-icon icon="solar:case-round-linear" width="20" stroke-width="1.5"></iconify-icon>
+                    Tuyển dụng
+                </a>
+                <a asp-controller="BaoCao" asp-action="NhanVienTheoPhongBan" class="flex items-center gap-3 px-3 py-2.5 @(controller == "baocao" ? "bg-gray-50 text-gray-900 font-medium" : "text-gray-500 hover:text-gray-900 hover:bg-gray-50") rounded-lg text-sm transition-colors">
+                    <iconify-icon icon="solar:chart-square-linear" width="20" stroke-width="1.5"></iconify-icon>
+                    Báo cáo
+                </a>
+            }
+
+            @if (User.IsInRole("Admin"))
+            {
+                <div class="pt-4 mt-4 border-t border-gray-100"></div>
+                <a asp-controller="Admin" asp-action="NguoiDung" class="flex items-center gap-3 px-3 py-2.5 @(controller == "admin" && action == "nguoidung" ? "bg-gray-50 text-gray-900 font-medium" : "text-gray-500 hover:text-gray-900 hover:bg-gray-50") rounded-lg text-sm transition-colors">
+                    <iconify-icon icon="solar:user-id-linear" width="20" stroke-width="1.5"></iconify-icon>
+                    Quản lý người dùng
+                </a>
+                <a asp-controller="Admin" asp-action="PhanQuyen" class="flex items-center gap-3 px-3 py-2.5 @(controller == "admin" && action == "phanquyen" ? "bg-gray-50 text-gray-900 font-medium" : "text-gray-500 hover:text-gray-900 hover:bg-gray-50") rounded-lg text-sm transition-colors">
+                    <iconify-icon icon="solar:shield-keyhole-linear" width="20" stroke-width="1.5"></iconify-icon>
+                    Phân quyền
+                </a>
+            }
+        </nav>
+
+        <div class="p-4 border-t border-gray-100">
+            <div class="flex items-center gap-3 px-2 py-2 rounded-lg">
+                <div class="h-8 w-8 rounded-full bg-gray-200 border border-gray-300 flex items-center justify-center overflow-hidden">
+                    <iconify-icon icon="solar:user-rounded-linear" class="text-gray-500" width="16" stroke-width="1.5"></iconify-icon>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-gray-900 truncate">@User.Identity?.Name</p>
+                    <p class="text-xs text-gray-500 truncate">@User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value</p>
+                </div>
+                <button onclick="sidebarLogout()" class="text-gray-400 hover:text-red-500 transition-colors" title="Đăng xuất">
+                        <iconify-icon icon="solar:logout-2-linear" width="18" stroke-width="1.5"></iconify-icon>
+                    </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-full min-w-0 bg-gray-50/50">
+        <header class="h-16 bg-white/80 backdrop-blur-md border-b border-gray-200 flex items-center justify-between px-6 lg:px-10 sticky top-0 z-10">
+            <div class="flex items-center gap-4">
+                <h1 class="text-xl font-semibold tracking-tight text-gray-900">@ViewData["Title"]</h1>
+            </div>
+            @if (User.IsInRole("Manager") && !string.IsNullOrWhiteSpace(managerPhongBan))
+            {
+                <div class="hidden md:inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-sky-50 border border-sky-100 text-sky-800 text-xs font-medium">
+                    <iconify-icon icon="solar:buildings-linear" width="14"></iconify-icon>
+                    Bạn đang quản lý: @managerPhongBan
+                </div>
+            }
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-6 lg:p-10">
+            <div class="max-w-6xl mx-auto">
+                @if (TempData["Success"] != null)
+                {
+                    <div class="mb-4 bg-emerald-50 text-emerald-700 text-sm px-4 py-3 rounded-lg border border-emerald-100">
+                        @TempData["Success"]
+                    </div>
+                }
+                @if (TempData["Error"] != null)
+                {
+                    <div class="mb-4 bg-red-50 text-red-600 text-sm px-4 py-3 rounded-lg border border-red-100">
+                        @TempData["Error"]
+                    </div>
+                }
+                @RenderBody()
+            </div>
+        </div>
+    </main>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+    async function sidebarLogout() {
+        try {
+            const res = await fetch('/Account/LogoutApi', { method: 'POST' });
+            const data = await res.json();
+            if (data.success) window.location.href = data.redirectUrl;
+        } catch (e) {
+            window.location.href = '/Account/Login';
+        }
+    }
+    </script>
+</body>
+</html>

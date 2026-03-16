@@ -1,0 +1,174 @@
+@model IEnumerable<NguoiDung>
+@{
+    ViewData["Title"] = "Quản lý người dùng";
+}
+
+<div class="space-y-6">
+    <p class="text-sm text-gray-500">Quản lý tài khoản người dùng hệ thống</p>
+
+    <!-- Add form -->
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)] p-6">
+        <h3 class="text-sm font-semibold text-gray-900 mb-4">Thêm tài khoản mới</h3>
+        <form id="addUserForm" class="flex flex-wrap gap-3 items-end">
+            <div>
+                <label class="block text-xs font-medium text-gray-700 mb-1">Tên đăng nhập</label>
+                <input name="TenDangNhap" required class="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-gray-400 w-40">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-700 mb-1">Mật khẩu</label>
+                <input name="MatKhau" type="password" required class="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-gray-400 w-40">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-700 mb-1">Họ tên</label>
+                <input name="HoTen" class="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-gray-400 w-40">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-700 mb-1">Email</label>
+                <input name="Email" type="email" class="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-gray-400 w-48">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-700 mb-1">Vai trò</label>
+                <select name="MaVaiTro" id="addUserRole" class="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-gray-400 w-40">
+                    <option value="3">User</option>
+                    <option value="2">Manager</option>
+                    <option value="1">Admin</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-700 mb-1">Phòng ban quản lý</label>
+                <select name="MaPhongBan" id="addUserPhongBan" class="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-gray-400 w-48">
+                    <option value="">-- Không áp dụng --</option>
+                    @if (ViewData["PhongBans"] is IEnumerable<PhongBan> phongBans)
+                    {
+                        foreach (var pb in phongBans)
+                        {
+                            <option value="@pb.MaPhongBan">@pb.TenPhongBan</option>
+                        }
+                    }
+                </select>
+            </div>
+            <button type="submit" class="bg-gray-900 text-white hover:bg-gray-800 px-4 py-2 rounded-lg text-sm font-medium transition-colors">Thêm</button>
+        </form>
+    </div>
+
+    <!-- User list -->
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)] overflow-hidden">
+        <table class="w-full text-sm">
+            <thead>
+                <tr class="border-b border-gray-100">
+                    <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase">ID</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase">Tên đăng nhập</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase">Họ tên</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase hidden md:table-cell">Email</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase">Vai trò</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase hidden lg:table-cell">Phòng ban quản lý</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase">Trạng thái</th>
+                    <th class="text-right px-6 py-3 text-xs font-medium text-gray-500 uppercase">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-50">
+                @foreach (var user in Model)
+                {
+                    <tr class="hover:bg-gray-50/50 transition-colors">
+                        <td class="px-6 py-4 text-gray-500">@user.MaNguoiDung</td>
+                        <td class="px-6 py-4 font-medium text-gray-900">@user.TenDangNhap</td>
+                        <td class="px-6 py-4 text-gray-600">@user.HoTen</td>
+                        <td class="px-6 py-4 text-gray-500 hidden md:table-cell">@user.Email</td>
+                        <td class="px-6 py-4">
+                            <span class="text-xs px-2 py-0.5 rounded-md font-medium bg-gray-100 text-gray-700">
+                                @(user.VaiTro?.TenVaiTro ?? "Chưa gán")
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-gray-600 hidden lg:table-cell">@(user.PhongBan?.TenPhongBan ?? "-")</td>
+                        <td class="px-6 py-4">
+                            <span class="text-xs px-2 py-0.5 rounded-md font-medium @(user.TrangThai ? "bg-emerald-50 text-emerald-600" : "bg-red-50 text-red-600")">
+                                @(user.TrangThai ? "Hoạt động" : "Bị khóa")
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-right">
+                            <button onclick="deleteNguoiDung(@user.MaNguoiDung, this)" class="text-gray-400 hover:text-red-600 transition-colors">
+                                <iconify-icon icon="solar:trash-bin-trash-linear" width="18"></iconify-icon>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+// === Fetch API: Thêm người dùng ===
+document.getElementById('addUserForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const form = this;
+    const data = {
+        tenDangNhap: form.querySelector('[name="TenDangNhap"]').value,
+        matKhau: form.querySelector('[name="MatKhau"]').value,
+        hoTen: form.querySelector('[name="HoTen"]').value || null,
+        email: form.querySelector('[name="Email"]').value || null,
+        maVaiTro: parseInt(form.querySelector('[name="MaVaiTro"]').value),
+        maPhongBan: form.querySelector('[name="MaVaiTro"]').value === '2'
+            ? (parseInt(form.querySelector('[name="MaPhongBan"]').value) || null)
+            : null
+    };
+    try {
+        const res = await fetch('/Admin/CreateNguoiDungApi', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        const result = await res.json();
+        if (result.success) {
+            showToast(result.message, 'success');
+            setTimeout(() => location.reload(), 800);
+        } else {
+            showToast(result.message, 'error');
+        }
+    } catch (err) {
+        showToast('Có lỗi xảy ra!', 'error');
+    }
+});
+
+// === Fetch API: Xóa người dùng ===
+async function deleteNguoiDung(id, btn) {
+    if (!confirm('Bạn có chắc muốn xóa tài khoản này?')) return;
+    try {
+        const res = await fetch(`/Admin/DeleteNguoiDungApi/${id}`, { method: 'DELETE' });
+        const data = await res.json();
+        if (data.success) {
+            const row = btn.closest('tr');
+            row.style.transition = 'opacity 0.3s';
+            row.style.opacity = '0';
+            setTimeout(() => row.remove(), 300);
+            showToast(data.message, 'success');
+        } else {
+            showToast(data.message, 'error');
+        }
+    } catch (e) {
+        showToast('Có lỗi xảy ra!', 'error');
+    }
+}
+
+function showToast(message, type) {
+    const toast = document.createElement('div');
+    toast.className = `fixed top-4 right-4 z-50 px-4 py-3 rounded-lg text-sm font-medium shadow-lg transition-all duration-300 ${type === 'success' ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' : 'bg-red-50 text-red-600 border border-red-100'}`;
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 3000);
+}
+
+const addUserRole = document.getElementById('addUserRole');
+const addUserPhongBan = document.getElementById('addUserPhongBan');
+
+function toggleAddUserPhongBan() {
+    const isManager = addUserRole.value === '2';
+    addUserPhongBan.disabled = !isManager;
+    if (!isManager) addUserPhongBan.value = '';
+}
+
+addUserRole.addEventListener('change', toggleAddUserPhongBan);
+toggleAddUserPhongBan();
+</script>
+}

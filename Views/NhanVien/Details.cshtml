@@ -1,0 +1,87 @@
+@model NhanVien
+@{
+    ViewData["Title"] = "Chi tiết nhân viên";
+}
+
+<div class="space-y-6">
+    <div class="flex items-center gap-3">
+        <a asp-action="Index" class="text-gray-400 hover:text-gray-900 transition-colors">
+            <iconify-icon icon="solar:alt-arrow-left-linear" width="20"></iconify-icon>
+        </a>
+        <h2 class="text-lg font-semibold text-gray-900">@Model.HoTen</h2>
+        <span class="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-gray-100 text-gray-700">
+            NV-@Model.MaNhanVien
+        </span>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Info -->
+        <div class="lg:col-span-2 bg-white rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)] p-6">
+            <h3 class="text-sm font-semibold text-gray-900 mb-4">Thông tin cá nhân</h3>
+            <div class="grid grid-cols-2 gap-4 text-sm">
+                <div><span class="text-gray-500">Ngày sinh:</span><p class="font-medium text-gray-900">@Model.NgaySinh?.ToString("dd/MM/yyyy")</p></div>
+                <div><span class="text-gray-500">Giới tính:</span><p class="font-medium text-gray-900">@Model.GioiTinh</p></div>
+                <div><span class="text-gray-500">Số điện thoại:</span><p class="font-medium text-gray-900">@Model.SoDienThoai</p></div>
+                <div><span class="text-gray-500">Email:</span><p class="font-medium text-gray-900">@Model.Email</p></div>
+                <div class="col-span-2"><span class="text-gray-500">Địa chỉ:</span><p class="font-medium text-gray-900">@Model.DiaChi</p></div>
+                <div><span class="text-gray-500">Phòng ban:</span><p class="font-medium text-gray-900">@(Model.PhongBan?.TenPhongBan ?? "Chưa phân")</p></div>
+                <div><span class="text-gray-500">Chức vụ:</span><p class="font-medium text-gray-900">@Model.ChucVu</p></div>
+                <div><span class="text-gray-500">Ngày vào làm:</span><p class="font-medium text-gray-900">@Model.NgayVaoLam?.ToString("dd/MM/yyyy")</p></div>
+            </div>
+
+            <div class="flex gap-3 pt-6 mt-6 border-t border-gray-100">
+                <a asp-action="Edit" asp-route-id="@Model.MaNhanVien" class="bg-gray-900 text-white hover:bg-gray-800 px-4 py-2 rounded-lg text-sm font-medium transition-colors">Chỉnh sửa</a>
+                <a asp-action="Index" class="bg-gray-100 text-gray-700 hover:bg-gray-200 px-4 py-2 rounded-lg text-sm font-medium transition-colors">Quay lại</a>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="space-y-6">
+            <!-- Hop dong -->
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)] p-6">
+                <h3 class="text-sm font-semibold text-gray-900 mb-3">Hợp đồng</h3>
+                @if (Model.HopDongs.Any())
+                {
+                    @foreach (var hd in Model.HopDongs)
+                    {
+                        <div class="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
+                            <div>
+                                <p class="text-sm font-medium text-gray-900">@hd.LoaiHopDong</p>
+                                <p class="text-xs text-gray-500">@hd.NgayBatDau.ToString("dd/MM/yyyy") - @hd.NgayKetThuc?.ToString("dd/MM/yyyy")</p>
+                            </div>
+                            <span class="text-xs px-2 py-0.5 rounded-md @(hd.TrangThai == "Còn hạn" ? "bg-emerald-50 text-emerald-600" : "bg-red-50 text-red-600")">
+                                @hd.TrangThai
+                            </span>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p class="text-xs text-gray-400">Chưa có hợp đồng</p>
+                }
+            </div>
+
+            <!-- Danh gia -->
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)] p-6">
+                <h3 class="text-sm font-semibold text-gray-900 mb-3">Đánh giá</h3>
+                @if (Model.DanhGias.Any())
+                {
+                    @foreach (var dg in Model.DanhGias.OrderByDescending(d => d.NgayDanhGia))
+                    {
+                        <div class="py-2 border-b border-gray-50 last:border-0">
+                            <div class="flex items-center justify-between">
+                                <p class="text-sm font-medium text-gray-900">@dg.KyDanhGia</p>
+                                <span class="text-sm font-semibold text-gray-900">@dg.DiemDanhGia/10</span>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">@dg.NhanXet</p>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p class="text-xs text-gray-400">Chưa có đánh giá</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>

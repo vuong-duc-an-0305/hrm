@@ -1,0 +1,301 @@
+<html lang="vi"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách phòng ban - Hệ thống Quản lý Nhân sự</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-900 h-screen w-full flex overflow-hidden selection:bg-gray-200 selection:text-gray-900" style="font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased;">
+
+    <!-- Sidebar (Desktop) -->
+    <aside class="w-64 bg-white border-r border-gray-200 flex-col hidden md:flex h-full relative z-20">
+        <!-- Logo -->
+        <div class="h-16 flex items-center px-6 border-b border-gray-100/50">
+            <div class="h-8 w-8 bg-gray-900 rounded-lg flex items-center justify-center text-white mr-3">
+                <span class="text-xs font-semibold tracking-tighter">HRM</span>
+            </div>
+            <span class="text-sm font-semibold tracking-tight text-gray-900">Doanh Nghiệp</span>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-500 hover:text-gray-900 hover:bg-gray-50 rounded-lg text-sm transition-colors">
+                <iconify-icon icon="solar:widget-5-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Tổng quan
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-500 hover:text-gray-900 hover:bg-gray-50 rounded-lg text-sm transition-colors">
+                <iconify-icon icon="solar:users-group-rounded-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Nhân viên
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 bg-gray-50 text-gray-900 rounded-lg text-sm font-medium transition-colors">
+                <iconify-icon icon="solar:city-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Phòng ban
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-500 hover:text-gray-900 hover:bg-gray-50 rounded-lg text-sm transition-colors">
+                <iconify-icon icon="solar:document-text-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Hợp đồng
+            </a>
+            <div class="pt-4 mt-4 border-t border-gray-100"></div>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-500 hover:text-gray-900 hover:bg-gray-50 rounded-lg text-sm transition-colors">
+                <iconify-icon icon="solar:settings-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Cài đặt
+            </a>
+        </nav>
+
+        <!-- User profile snippet -->
+        <div class="p-4 border-t border-gray-100">
+            <div class="flex items-center gap-3 px-2 py-2 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                <div class="h-8 w-8 rounded-full bg-gray-200 border border-gray-300 flex items-center justify-center overflow-hidden">
+                    <iconify-icon icon="solar:user-rounded-linear" class="text-gray-500" width="16" stroke-width="1.5"></iconify-icon>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-gray-900 truncate">Admin</p>
+                    <p class="text-xs text-gray-500 truncate">Quản trị viên</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-full min-w-0 bg-gray-50/50">
+        <!-- Top Header -->
+        <header class="h-16 bg-white/80 backdrop-blur-md border-b border-gray-200 flex items-center justify-between px-6 lg:px-10 sticky top-0 z-10">
+            <div class="flex items-center gap-4">
+                <button class="md:hidden text-gray-500 hover:text-gray-900">
+                    <iconify-icon icon="solar:hamburger-menu-linear" width="24" stroke-width="1.5"></iconify-icon>
+                </button>
+                <div class="flex items-center gap-2 text-sm">
+                    <a href="#" class="text-gray-500 hover:text-gray-900 transition-colors">Phòng ban</a>
+                    <span class="text-gray-300">/</span>
+                    <span class="font-medium text-gray-900">Danh sách</span>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <button class="relative text-gray-500 hover:text-gray-900 transition-colors">
+                    <iconify-icon icon="solar:bell-linear" width="22" stroke-width="1.5"></iconify-icon>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 overflow-y-auto">
+            <div class="max-w-6xl mx-auto p-6 lg:p-10 space-y-8 pb-24">
+                
+                <!-- Page Title & Actions -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h1 class="text-xl font-semibold tracking-tight text-gray-900">Danh sách phòng ban</h1>
+                        <p class="text-sm text-gray-500 mt-1">Quản lý cơ cấu tổ chức và số lượng nhân sự các phòng ban.</p>
+                    </div>
+                    <div class="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+                        <div class="relative w-full sm:w-64">
+                            <iconify-icon icon="solar:magnifer-linear" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" width="18" stroke-width="1.5"></iconify-icon>
+                            <input type="text" placeholder="Tìm kiếm phòng ban..." class="w-full pl-9 pr-4 py-2 text-sm text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-gray-300 transition-colors placeholder:text-gray-400">
+                        </div>
+                        <button type="button" class="w-full sm:w-auto px-4 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg hover:bg-gray-800 transition-all focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 flex items-center justify-center gap-2 shrink-0">
+                            <iconify-icon icon="solar:add-circle-linear" width="18" stroke-width="1.5"></iconify-icon>
+                            Thêm phòng ban
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Departments Table -->
+                <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)] overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-gray-50/50 border-b border-gray-100">
+                                    <th class="px-6 py-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Tên phòng ban</th>
+                                    <th class="px-6 py-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Trưởng phòng</th>
+                                    <th class="px-6 py-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Số lượng NV</th>
+                                    <th class="px-6 py-4 text-xs font-medium text-gray-500 uppercase tracking-wider text-right">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100">
+                                
+                                <!-- Row 1 -->
+                                <tr class="hover:bg-gray-50/50 transition-colors group">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center gap-3">
+                                            <div class="h-10 w-10 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 shrink-0">
+                                                <iconify-icon icon="solar:lightbulb-linear" width="20" stroke-width="1.5"></iconify-icon>
+                                            </div>
+                                            <div>
+                                                <div class="text-sm font-medium text-gray-900">Marketing</div>
+                                                <div class="text-xs text-gray-500 mt-0.5">Mã: MKT-01</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center gap-2">
+                                            <div class="h-6 w-6 rounded-full bg-gray-200 border border-gray-300 flex items-center justify-center overflow-hidden shrink-0 text-gray-500">
+                                                <iconify-icon icon="solar:user-rounded-linear" width="14" stroke-width="1.5"></iconify-icon>
+                                            </div>
+                                            <div class="text-sm text-gray-700">Trần Văn Bình</div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center gap-1.5 text-sm font-medium text-gray-700">
+                                            <iconify-icon icon="solar:users-group-rounded-linear" class="text-gray-400" width="16" stroke-width="1.5"></iconify-icon>
+                                            12
+                                            <span class="text-xs font-normal text-gray-500 ml-1">nhân viên</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
+                                        <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <button class="p-1.5 text-gray-400 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors focus:outline-none" title="Chỉnh sửa">
+                                                <iconify-icon icon="solar:pen-linear" width="18" stroke-width="1.5"></iconify-icon>
+                                            </button>
+                                            <button class="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-md transition-colors focus:outline-none" title="Xóa">
+                                                <iconify-icon icon="solar:trash-bin-trash-linear" width="18" stroke-width="1.5"></iconify-icon>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Row 2 -->
+                                <tr class="hover:bg-gray-50/50 transition-colors group">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center gap-3">
+                                            <div class="h-10 w-10 rounded-lg bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
+                                                <iconify-icon icon="solar:monitor-linear" width="20" stroke-width="1.5"></iconify-icon>
+                                            </div>
+                                            <div>
+                                                <div class="text-sm font-medium text-gray-900">Phát triển Phần mềm</div>
+                                                <div class="text-xs text-gray-500 mt-0.5">Mã: IT-01</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center gap-2">
+                                            <div class="h-6 w-6 rounded-full bg-gray-200 border border-gray-300 flex items-center justify-center overflow-hidden shrink-0 text-gray-500">
+                                                <iconify-icon icon="solar:user-rounded-linear" width="14" stroke-width="1.5"></iconify-icon>
+                                            </div>
+                                            <div class="text-sm text-gray-700">Nguyễn Hải Nam</div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center gap-1.5 text-sm font-medium text-gray-700">
+                                            <iconify-icon icon="solar:users-group-rounded-linear" class="text-gray-400" width="16" stroke-width="1.5"></iconify-icon>
+                                            45
+                                            <span class="text-xs font-normal text-gray-500 ml-1">nhân viên</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
+                                        <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <button class="p-1.5 text-gray-400 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors focus:outline-none" title="Chỉnh sửa">
+                                                <iconify-icon icon="solar:pen-linear" width="18" stroke-width="1.5"></iconify-icon>
+                                            </button>
+                                            <button class="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-md transition-colors focus:outline-none" title="Xóa">
+                                                <iconify-icon icon="solar:trash-bin-trash-linear" width="18" stroke-width="1.5"></iconify-icon>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Row 3 -->
+                                <tr class="hover:bg-gray-50/50 transition-colors group">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center gap-3">
+                                            <div class="h-10 w-10 rounded-lg bg-amber-50 border border-amber-100 flex items-center justify-center text-amber-600 shrink-0">
+                                                <iconify-icon icon="solar:users-group-two-rounded-linear" width="20" stroke-width="1.5"></iconify-icon>
+                                            </div>
+                                            <div>
+                                                <div class="text-sm font-medium text-gray-900">Hành chính Nhân sự</div>
+                                                <div class="text-xs text-gray-500 mt-0.5">Mã: HR-01</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center gap-2">
+                                            <div class="h-6 w-6 rounded-full bg-gray-200 border border-gray-300 flex items-center justify-center overflow-hidden shrink-0 text-gray-500">
+                                                <iconify-icon icon="solar:user-rounded-linear" width="14" stroke-width="1.5"></iconify-icon>
+                                            </div>
+                                            <div class="text-sm text-gray-700">Lê Thị Mai</div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center gap-1.5 text-sm font-medium text-gray-700">
+                                            <iconify-icon icon="solar:users-group-rounded-linear" class="text-gray-400" width="16" stroke-width="1.5"></iconify-icon>
+                                            8
+                                            <span class="text-xs font-normal text-gray-500 ml-1">nhân viên</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
+                                        <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <button class="p-1.5 text-gray-400 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors focus:outline-none" title="Chỉnh sửa">
+                                                <iconify-icon icon="solar:pen-linear" width="18" stroke-width="1.5"></iconify-icon>
+                                            </button>
+                                            <button class="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-md transition-colors focus:outline-none" title="Xóa">
+                                                <iconify-icon icon="solar:trash-bin-trash-linear" width="18" stroke-width="1.5"></iconify-icon>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Row 4 -->
+                                <tr class="hover:bg-gray-50/50 transition-colors group">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center gap-3">
+                                            <div class="h-10 w-10 rounded-lg bg-purple-50 border border-purple-100 flex items-center justify-center text-purple-600 shrink-0">
+                                                <iconify-icon icon="solar:wallet-money-linear" width="20" stroke-width="1.5"></iconify-icon>
+                                            </div>
+                                            <div>
+                                                <div class="text-sm font-medium text-gray-900">Kế toán &amp; Tài chính</div>
+                                                <div class="text-xs text-gray-500 mt-0.5">Mã: FIN-01</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center gap-2">
+                                            <div class="h-6 w-6 rounded-full bg-gray-200 border border-gray-300 flex items-center justify-center overflow-hidden shrink-0 text-gray-500">
+                                                <iconify-icon icon="solar:user-rounded-linear" width="14" stroke-width="1.5"></iconify-icon>
+                                            </div>
+                                            <div class="text-sm text-gray-700">Phạm Quang Huy</div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center gap-1.5 text-sm font-medium text-gray-700">
+                                            <iconify-icon icon="solar:users-group-rounded-linear" class="text-gray-400" width="16" stroke-width="1.5"></iconify-icon>
+                                            6
+                                            <span class="text-xs font-normal text-gray-500 ml-1">nhân viên</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
+                                        <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <button class="p-1.5 text-gray-400 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors focus:outline-none" title="Chỉnh sửa">
+                                                <iconify-icon icon="solar:pen-linear" width="18" stroke-width="1.5"></iconify-icon>
+                                            </button>
+                                            <button class="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-md transition-colors focus:outline-none" title="Xóa">
+                                                <iconify-icon icon="solar:trash-bin-trash-linear" width="18" stroke-width="1.5"></iconify-icon>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Pagination Footer -->
+                    <div class="px-6 py-4 border-t border-gray-100 bg-gray-50/50 flex items-center justify-between">
+                        <span class="text-xs text-gray-500">Hiển thị <span class="font-medium text-gray-900">4</span> phòng ban</span>
+                        <div class="flex items-center gap-2">
+                            <button disabled="" class="p-1.5 rounded-md text-gray-300 cursor-not-allowed">
+                                <iconify-icon icon="solar:alt-arrow-left-linear" width="18" stroke-width="1.5"></iconify-icon>
+                            </button>
+                            <button disabled="" class="p-1.5 rounded-md text-gray-300 cursor-not-allowed">
+                                <iconify-icon icon="solar:alt-arrow-right-linear" width="18" stroke-width="1.5"></iconify-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+
+</body></html>

@@ -1,0 +1,317 @@
+<html lang="vi"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hồ sơ nhân viên - Hệ thống Quản lý Nhân sự</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-900 h-screen w-full flex overflow-hidden selection:bg-gray-200 selection:text-gray-900" style="font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased;">
+
+    <!-- Sidebar (Desktop) -->
+    <aside class="w-64 bg-white border-r border-gray-200 flex-col hidden md:flex h-full relative z-20">
+        <!-- Logo -->
+        <div class="h-16 flex items-center px-6 border-b border-gray-100/50">
+            <div class="h-8 w-8 bg-gray-900 rounded-lg flex items-center justify-center text-white mr-3">
+                <span class="text-xs font-semibold tracking-tighter">HRM</span>
+            </div>
+            <span class="text-sm font-semibold tracking-tight text-gray-900">Doanh Nghiệp</span>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-500 hover:text-gray-900 hover:bg-gray-50 rounded-lg text-sm transition-colors">
+                <iconify-icon icon="solar:widget-5-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Tổng quan
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 bg-gray-50 text-gray-900 rounded-lg text-sm font-medium transition-colors">
+                <iconify-icon icon="solar:users-group-rounded-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Nhân viên
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-500 hover:text-gray-900 hover:bg-gray-50 rounded-lg text-sm transition-colors">
+                <iconify-icon icon="solar:city-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Phòng ban
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-500 hover:text-gray-900 hover:bg-gray-50 rounded-lg text-sm transition-colors">
+                <iconify-icon icon="solar:document-text-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Hợp đồng
+            </a>
+            <div class="pt-4 mt-4 border-t border-gray-100"></div>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-500 hover:text-gray-900 hover:bg-gray-50 rounded-lg text-sm transition-colors">
+                <iconify-icon icon="solar:settings-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Cài đặt
+            </a>
+        </nav>
+
+        <!-- User profile snippet -->
+        <div class="p-4 border-t border-gray-100">
+            <div class="flex items-center gap-3 px-2 py-2 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                <div class="h-8 w-8 rounded-full bg-gray-200 border border-gray-300 flex items-center justify-center overflow-hidden">
+                    <iconify-icon icon="solar:user-rounded-linear" class="text-gray-500" width="16" stroke-width="1.5"></iconify-icon>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-gray-900 truncate">Admin</p>
+                    <p class="text-xs text-gray-500 truncate">Quản trị viên</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-full min-w-0 bg-gray-50/50">
+        <!-- Top Header -->
+        <header class="h-16 bg-white/80 backdrop-blur-md border-b border-gray-200 flex items-center justify-between px-6 lg:px-10 sticky top-0 z-10">
+            <div class="flex items-center gap-4">
+                <button class="md:hidden text-gray-500 hover:text-gray-900">
+                    <iconify-icon icon="solar:hamburger-menu-linear" width="24" stroke-width="1.5"></iconify-icon>
+                </button>
+                <div class="flex items-center gap-2 text-sm">
+                    <a href="#" class="text-gray-500 hover:text-gray-900 transition-colors">Nhân viên</a>
+                    <span class="text-gray-300">/</span>
+                    <span class="font-medium text-gray-900">Hồ sơ chi tiết</span>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <button class="relative text-gray-500 hover:text-gray-900 transition-colors">
+                    <iconify-icon icon="solar:bell-linear" width="22" stroke-width="1.5"></iconify-icon>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 overflow-y-auto">
+            <div class="max-w-4xl mx-auto p-6 lg:p-10 space-y-8 pb-24">
+                
+                <!-- Page Title & Actions -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h1 class="text-xl font-semibold tracking-tight text-gray-900">Hồ sơ nhân viên</h1>
+                        <p class="text-sm text-gray-500 mt-1">Xem chi tiết thông tin, hợp đồng và đánh giá của nhân viên.</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button type="button" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-all focus:outline-none focus:ring-2 focus:ring-gray-200 flex items-center gap-2">
+                            <iconify-icon icon="solar:printer-linear" width="16" stroke-width="1.5"></iconify-icon>
+                            In hồ sơ
+                        </button>
+                        <button type="button" class="px-4 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg hover:bg-gray-800 transition-all focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 flex items-center gap-2">
+                            <iconify-icon icon="solar:pen-linear" width="16" stroke-width="1.5"></iconify-icon>
+                            Chỉnh sửa
+                        </button>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    
+                    <!-- Section 1: Profile Summary -->
+                    <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)] p-6 lg:p-8 flex flex-col sm:flex-row gap-8 items-start">
+                        <div class="flex flex-col items-center gap-4">
+                            <div class="h-24 w-24 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center text-gray-400 overflow-hidden">
+                                <span class="text-2xl font-semibold tracking-tighter text-gray-500">HN</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex-1 space-y-4 pt-2 w-full">
+                            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+                                <div>
+                                    <h2 class="text-lg font-semibold tracking-tight text-gray-900">Hoàng Ngọc Anh</h2>
+                                    <p class="text-sm text-gray-500 mt-0.5">Chuyên viên Marketing • Khối Kinh doanh</p>
+                                </div>
+                                <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700 ring-1 ring-inset ring-emerald-600/20 w-max">
+                                    <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                                    Đang làm việc
+                                </span>
+                            </div>
+                            
+                            <div class="flex flex-wrap items-center gap-x-6 gap-y-3 pt-2">
+                                <div class="flex items-center gap-2 text-sm text-gray-600">
+                                    <iconify-icon icon="solar:user-id-linear" class="text-gray-400" width="16" stroke-width="1.5"></iconify-icon>
+                                    NV-2023041
+                                </div>
+                                <div class="flex items-center gap-2 text-sm text-gray-600">
+                                    <iconify-icon icon="solar:phone-linear" class="text-gray-400" width="16" stroke-width="1.5"></iconify-icon>
+                                    0987 654 321
+                                </div>
+                                <div class="flex items-center gap-2 text-sm text-gray-600">
+                                    <iconify-icon icon="solar:letter-linear" class="text-gray-400" width="16" stroke-width="1.5"></iconify-icon>
+                                    anh.hn@doanhnghiep.vn
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: Personal & Contact Information -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Personal Info -->
+                        <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)] overflow-hidden">
+                            <div class="px-6 py-4 border-b border-gray-100 bg-gray-50/50">
+                                <h3 class="text-sm font-semibold text-gray-900 flex items-center gap-2">
+                                    <iconify-icon icon="solar:user-rounded-linear" class="text-gray-400" width="18" stroke-width="1.5"></iconify-icon>
+                                    Thông tin cá nhân
+                                </h3>
+                            </div>
+                            <div class="p-6 grid grid-cols-2 gap-y-5 gap-x-4">
+                                <div class="space-y-1">
+                                    <span class="block text-xs text-gray-500">Họ và tên</span>
+                                    <span class="block text-sm font-medium text-gray-900">Hoàng Ngọc Anh</span>
+                                </div>
+                                <div class="space-y-1">
+                                    <span class="block text-xs text-gray-500">Ngày sinh</span>
+                                    <span class="block text-sm font-medium text-gray-900">15/08/1995</span>
+                                </div>
+                                <div class="space-y-1">
+                                    <span class="block text-xs text-gray-500">Giới tính</span>
+                                    <span class="block text-sm font-medium text-gray-900">Nữ</span>
+                                </div>
+                                <div class="space-y-1">
+                                    <span class="block text-xs text-gray-500">CMND / CCCD</span>
+                                    <span class="block text-sm font-medium text-gray-900">001195012345</span>
+                                </div>
+                                <div class="space-y-1 col-span-2">
+                                    <span class="block text-xs text-gray-500">Địa chỉ thường trú</span>
+                                    <span class="block text-sm font-medium text-gray-900">Số 123, Đường Nguyễn Trãi, Quận Thanh Xuân, Hà Nội</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Work Info -->
+                        <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)] overflow-hidden">
+                            <div class="px-6 py-4 border-b border-gray-100 bg-gray-50/50">
+                                <h3 class="text-sm font-semibold text-gray-900 flex items-center gap-2">
+                                    <iconify-icon icon="solar:suitcase-linear" class="text-gray-400" width="18" stroke-width="1.5"></iconify-icon>
+                                    Thông tin công việc
+                                </h3>
+                            </div>
+                            <div class="p-6 grid grid-cols-2 gap-y-5 gap-x-4">
+                                <div class="space-y-1">
+                                    <span class="block text-xs text-gray-500">Phòng ban</span>
+                                    <span class="block text-sm font-medium text-gray-900">Phòng Marketing</span>
+                                </div>
+                                <div class="space-y-1">
+                                    <span class="block text-xs text-gray-500">Chức vụ</span>
+                                    <span class="block text-sm font-medium text-gray-900">Chuyên viên</span>
+                                </div>
+                                <div class="space-y-1">
+                                    <span class="block text-xs text-gray-500">Quản lý trực tiếp</span>
+                                    <span class="block text-sm font-medium text-gray-900">Trần Văn Bình</span>
+                                </div>
+                                <div class="space-y-1">
+                                    <span class="block text-xs text-gray-500">Ngày gia nhập</span>
+                                    <span class="block text-sm font-medium text-gray-900">01/04/2023</span>
+                                </div>
+                                <div class="space-y-1 col-span-2">
+                                    <span class="block text-xs text-gray-500">Email cá nhân</span>
+                                    <span class="block text-sm font-medium text-gray-900">ngocanh.hoang@gmail.com</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Contracts -->
+                    <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)] overflow-hidden">
+                        <div class="px-6 py-4 border-b border-gray-100 bg-gray-50/50 flex items-center justify-between">
+                            <h3 class="text-sm font-semibold text-gray-900 flex items-center gap-2">
+                                <iconify-icon icon="solar:document-text-linear" class="text-gray-400" width="18" stroke-width="1.5"></iconify-icon>
+                                Lịch sử hợp đồng
+                            </h3>
+                            <button class="text-xs font-medium text-gray-500 hover:text-gray-900 transition-colors">Xem tất cả</button>
+                        </div>
+                        <div class="divide-y divide-gray-100">
+                            <!-- Contract Item 1 -->
+                            <div class="p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-gray-50/50 transition-colors">
+                                <div class="flex items-start gap-4">
+                                    <div class="h-10 w-10 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 shrink-0">
+                                        <iconify-icon icon="solar:document-add-linear" width="20" stroke-width="1.5"></iconify-icon>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-sm font-medium text-gray-900">Hợp đồng không xác định thời hạn</h4>
+                                        <p class="text-xs text-gray-500 mt-0.5">Số: HD-2023-1102 • Ký ngày: 01/06/2023</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-4 sm:justify-end">
+                                    <div class="text-right hidden sm:block">
+                                        <span class="block text-xs text-gray-500">Thời hạn</span>
+                                        <span class="block text-sm font-medium text-gray-900">01/06/2023 - Vô thời hạn</span>
+                                    </div>
+                                    <span class="inline-flex items-center rounded-md bg-emerald-50 px-2 py-1 text-xs font-medium text-emerald-700 ring-1 ring-inset ring-emerald-600/20 whitespace-nowrap">
+                                        Hiệu lực
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <!-- Contract Item 2 -->
+                            <div class="p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-gray-50/50 transition-colors">
+                                <div class="flex items-start gap-4">
+                                    <div class="h-10 w-10 rounded-lg bg-gray-50 flex items-center justify-center text-gray-500 shrink-0">
+                                        <iconify-icon icon="solar:document-linear" width="20" stroke-width="1.5"></iconify-icon>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-sm font-medium text-gray-900">Hợp đồng thử việc</h4>
+                                        <p class="text-xs text-gray-500 mt-0.5">Số: TV-2023-0401 • Ký ngày: 01/04/2023</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-4 sm:justify-end">
+                                    <div class="text-right hidden sm:block">
+                                        <span class="block text-xs text-gray-500">Thời hạn</span>
+                                        <span class="block text-sm text-gray-900">01/04/2023 - 31/05/2023</span>
+                                    </div>
+                                    <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/20 whitespace-nowrap">
+                                        Đã kết thúc
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 4: Performance Reviews -->
+                    <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)] overflow-hidden">
+                        <div class="px-6 py-4 border-b border-gray-100 bg-gray-50/50 flex items-center justify-between">
+                            <h3 class="text-sm font-semibold text-gray-900 flex items-center gap-2">
+                                <iconify-icon icon="solar:chart-square-linear" class="text-gray-400" width="18" stroke-width="1.5"></iconify-icon>
+                                Đánh giá hiệu suất
+                            </h3>
+                        </div>
+                        <div class="divide-y divide-gray-100">
+                            <!-- Review Item 1 -->
+                            <div class="p-6">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div>
+                                        <h4 class="text-sm font-medium text-gray-900">Đánh giá định kỳ Quý 4/2023</h4>
+                                        <p class="text-xs text-gray-500 mt-0.5">Đánh giá bởi: Trần Văn Bình (Trưởng phòng) • 15/12/2023</p>
+                                    </div>
+                                    <span class="inline-flex items-center gap-1 rounded-md bg-amber-50 px-2 py-1 text-xs font-medium text-amber-700 ring-1 ring-inset ring-amber-600/20">
+                                        <iconify-icon icon="solar:star-bold" class="text-amber-500" width="12"></iconify-icon>
+                                        Xuất sắc
+                                    </span>
+                                </div>
+                                <div class="bg-gray-50 rounded-lg p-3 text-sm text-gray-600">
+                                    "Nhân viên hoàn thành vượt mục tiêu KPI đề ra trong quý. Có nhiều đóng góp sáng tạo cho chiến dịch cuối năm. Cần phát huy kỹ năng thuyết trình trước đám đông trong thời gian tới."
+                                </div>
+                            </div>
+
+                            <!-- Review Item 2 -->
+                            <div class="p-6">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div>
+                                        <h4 class="text-sm font-medium text-gray-900">Đánh giá kết thúc thử việc</h4>
+                                        <p class="text-xs text-gray-500 mt-0.5">Đánh giá bởi: Trần Văn Bình (Trưởng phòng) • 25/05/2023</p>
+                                    </div>
+                                    <span class="inline-flex items-center gap-1 rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-600/20">
+                                        <iconify-icon icon="solar:check-circle-bold" class="text-blue-500" width="12"></iconify-icon>
+                                        Đạt yêu cầu
+                                    </span>
+                                </div>
+                                <div class="bg-gray-50 rounded-lg p-3 text-sm text-gray-600">
+                                    "Hòa nhập tốt với văn hóa công ty. Nắm bắt công việc nhanh. Đáp ứng đủ các yêu cầu cơ bản của vị trí chuyên viên. Đề xuất ký hợp đồng chính thức."
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+</body></html>

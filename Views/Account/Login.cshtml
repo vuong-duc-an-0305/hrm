@@ -1,0 +1,91 @@
+@model LoginViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập - Hệ thống Quản lý Nhân sự</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-900 min-h-screen w-full flex items-center justify-center selection:bg-gray-200 selection:text-gray-900" style="font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased;">
+    <div class="w-full max-w-sm px-8 py-10 bg-white rounded-2xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.1)] border border-gray-100">
+        <div class="flex flex-col items-center mb-8">
+            <div class="h-10 w-10 bg-gray-900 rounded-xl flex items-center justify-center mb-4 text-white">
+                <span class="text-sm font-semibold tracking-tighter">HRM</span>
+            </div>
+            <h1 class="text-2xl font-semibold tracking-tight text-gray-900">Chào mừng trở lại</h1>
+            <p class="text-sm text-gray-500 mt-1">Đăng nhập vào hệ thống nhân sự</p>
+        </div>
+
+        <form id="loginForm" class="space-y-4">
+            @Html.AntiForgeryToken()
+            <div>
+                <label class="block text-xs font-medium text-gray-700 mb-1">Tài khoản</label>
+                <input name="TenDangNhap" type="text" required placeholder="admin" class="w-full bg-transparent border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 placeholder-gray-400 transition-shadow">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-700 mb-1">Mật khẩu</label>
+                <input name="MatKhau" type="password" required placeholder="••••••••" class="w-full bg-transparent border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 placeholder-gray-400 transition-shadow">
+            </div>
+
+            <div id="loginError" class="hidden bg-red-50 text-red-600 text-xs px-3 py-2 rounded-lg border border-red-100"></div>
+
+            <div class="flex items-center justify-between pt-1">
+                <label class="flex items-center gap-2 cursor-pointer">
+                    <input name="GhiNho" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-white checked:bg-gray-900 checked:border-gray-900 focus:outline-none transition-all">
+                    <span class="text-xs text-gray-600">Ghi nhớ phiên</span>
+                </label>
+            </div>
+
+            <button type="submit" id="loginBtn" class="w-full bg-gray-900 text-white hover:bg-gray-800 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors mt-2">
+                Đăng nhập
+            </button>
+        </form>
+
+        <script>
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const form = this;
+            const errorEl = document.getElementById('loginError');
+            const btn = document.getElementById('loginBtn');
+            errorEl.classList.add('hidden');
+            btn.disabled = true;
+            btn.textContent = 'Đang xử lý...';
+
+            const data = {
+                tenDangNhap: form.querySelector('[name="TenDangNhap"]').value,
+                matKhau: form.querySelector('[name="MatKhau"]').value,
+                ghiNho: form.querySelector('[name="GhiNho"]').checked
+            };
+
+            try {
+                const res = await fetch('/Account/LoginApi', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await res.json();
+                if (result.success) {
+                    window.location.href = result.redirectUrl;
+                } else {
+                    errorEl.textContent = result.message;
+                    errorEl.classList.remove('hidden');
+                    btn.disabled = false;
+                    btn.textContent = 'Đăng nhập';
+                }
+            } catch (err) {
+                errorEl.textContent = 'Có lỗi xảy ra, vui lòng thử lại!';
+                errorEl.classList.remove('hidden');
+                btn.disabled = false;
+                btn.textContent = 'Đăng nhập';
+            }
+        });
+        </script>
+    </div>
+</body>
+</html>

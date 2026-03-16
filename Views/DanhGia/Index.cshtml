@@ -1,0 +1,79 @@
+@model IEnumerable<DanhGia>
+@{
+    ViewData["Title"] = "Danh sách đánh giá";
+}
+
+<div class="space-y-6">
+    <div class="flex items-center justify-between">
+        <p class="text-sm text-gray-500">Đánh giá nhân viên theo kỳ</p>
+        <a asp-action="Create" class="inline-flex items-center gap-2 bg-gray-900 text-white hover:bg-gray-800 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors">
+            <iconify-icon icon="solar:add-circle-linear" width="18"></iconify-icon>
+            Thêm đánh giá
+        </a>
+    </div>
+
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)] overflow-hidden">
+        <table class="w-full text-sm">
+            <thead>
+                <tr class="border-b border-gray-100">
+                    <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase">Nhân viên</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase">Kỳ đánh giá</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase">Điểm</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase hidden md:table-cell">Nhận xét</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase hidden md:table-cell">Ngày</th>
+                    <th class="text-right px-6 py-3 text-xs font-medium text-gray-500 uppercase">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-50">
+                @foreach (var dg in Model)
+                {
+                    <tr class="hover:bg-gray-50/50 transition-colors">
+                        <td class="px-6 py-4 font-medium text-gray-900">@dg.NhanVien?.HoTen</td>
+                        <td class="px-6 py-4 text-gray-600">@dg.KyDanhGia</td>
+                        <td class="px-6 py-4">
+                            <span class="text-sm font-semibold @(dg.DiemDanhGia >= 7 ? "text-emerald-600" : dg.DiemDanhGia >= 5 ? "text-amber-600" : "text-red-600")">
+                                @dg.DiemDanhGia/10
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-gray-500 hidden md:table-cell max-w-xs truncate">@dg.NhanXet</td>
+                        <td class="px-6 py-4 text-gray-500 hidden md:table-cell">@dg.NgayDanhGia.ToString("dd/MM/yyyy")</td>
+                        <td class="px-6 py-4 text-right">
+                            <button onclick="deleteDanhGia(@dg.MaDanhGia, this)" class="text-gray-400 hover:text-red-600 transition-colors" title="Xóa">
+                                <iconify-icon icon="solar:trash-bin-trash-linear" width="18"></iconify-icon>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        @if (!Model.Any())
+        {
+            <div class="text-center py-12 text-gray-400">
+                <iconify-icon icon="solar:star-linear" width="48" class="mb-2"></iconify-icon>
+                <p class="text-sm">Chưa có đánh giá nào</p>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+<script>
+async function deleteDanhGia(id, btn) {
+    if (!confirm('Bạn có chắc muốn xóa đánh giá này?')) return;
+    try {
+        const res = await fetch(`/DanhGia/DeleteApi/${id}`, { method: 'DELETE' });
+        if (res.ok) {
+            const row = btn.closest('tr');
+            row.style.transition = 'opacity 0.3s';
+            row.style.opacity = '0';
+            setTimeout(() => row.remove(), 300);
+        } else {
+            alert('Xóa thất bại!');
+        }
+    } catch (e) {
+        alert('Lỗi kết nối!');
+    }
+}
+</script>
+}

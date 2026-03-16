@@ -1,0 +1,120 @@
+@model NhanVien
+@{
+    ViewData["Title"] = "Chỉnh sửa nhân viên";
+}
+
+<div class="max-w-2xl">
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)] p-8">
+        <h2 class="text-lg font-semibold text-gray-900 mb-6">Cập nhật thông tin nhân viên</h2>
+
+        <form id="editForm" class="space-y-5">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="MaNhanVien" />
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div class="sm:col-span-2">
+                    <label asp-for="HoTen" class="block text-xs font-medium text-gray-700 mb-1"></label>
+                    <input asp-for="HoTen" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400">
+                    <span asp-validation-for="HoTen" class="text-xs text-red-500"></span>
+                </div>
+
+                <div>
+                    <label asp-for="NgaySinh" class="block text-xs font-medium text-gray-700 mb-1"></label>
+                    <input asp-for="NgaySinh" type="date" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-gray-400">
+                </div>
+
+                <div>
+                    <label asp-for="GioiTinh" class="block text-xs font-medium text-gray-700 mb-1"></label>
+                    <select asp-for="GioiTinh" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-gray-400">
+                        <option value="">-- Chọn --</option>
+                        <option value="Nam">Nam</option>
+                        <option value="Nữ">Nữ</option>
+                    </select>
+                </div>
+
+                <div class="sm:col-span-2">
+                    <label asp-for="DiaChi" class="block text-xs font-medium text-gray-700 mb-1"></label>
+                    <input asp-for="DiaChi" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-gray-400">
+                </div>
+
+                <div>
+                    <label asp-for="SoDienThoai" class="block text-xs font-medium text-gray-700 mb-1"></label>
+                    <input asp-for="SoDienThoai" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-gray-400">
+                </div>
+
+                <div>
+                    <label asp-for="Email" class="block text-xs font-medium text-gray-700 mb-1"></label>
+                    <input asp-for="Email" type="email" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-gray-400">
+                </div>
+
+                <div>
+                    <label asp-for="ChucVu" class="block text-xs font-medium text-gray-700 mb-1"></label>
+                    <input asp-for="ChucVu" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-gray-400">
+                </div>
+
+                <div>
+                    <label asp-for="MaPhongBan" class="block text-xs font-medium text-gray-700 mb-1">Phòng ban</label>
+                    <select asp-for="MaPhongBan" asp-items="@(ViewData["PhongBans"] as SelectList)" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-gray-400">
+                        <option value="">-- Chọn phòng ban --</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label asp-for="NgayVaoLam" class="block text-xs font-medium text-gray-700 mb-1"></label>
+                    <input asp-for="NgayVaoLam" type="date" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-gray-400">
+                </div>
+            </div>
+
+            <div class="flex gap-3 pt-4">
+                <button type="submit" class="bg-gray-900 text-white hover:bg-gray-800 px-6 py-2.5 rounded-lg text-sm font-medium transition-colors">Lưu thay đổi</button>
+                <a asp-action="Index" class="bg-gray-100 text-gray-700 hover:bg-gray-200 px-6 py-2.5 rounded-lg text-sm font-medium transition-colors">Hủy</a>
+            </div>
+            <div id="formMessage" class="hidden text-sm px-3 py-2 rounded-lg"></div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+document.getElementById('editForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const form = this;
+    const msgEl = document.getElementById('formMessage');
+    const id = form.querySelector('[name="MaNhanVien"]').value;
+    const data = {
+        maNhanVien: parseInt(id),
+        hoTen: form.querySelector('[name="HoTen"]').value,
+        ngaySinh: form.querySelector('[name="NgaySinh"]').value || null,
+        gioiTinh: form.querySelector('[name="GioiTinh"]').value || null,
+        diaChi: form.querySelector('[name="DiaChi"]').value || null,
+        soDienThoai: form.querySelector('[name="SoDienThoai"]').value || null,
+        email: form.querySelector('[name="Email"]').value || null,
+        chucVu: form.querySelector('[name="ChucVu"]').value || null,
+        maPhongBan: parseInt(form.querySelector('[name="MaPhongBan"]').value) || null,
+        ngayVaoLam: form.querySelector('[name="NgayVaoLam"]').value || null
+    };
+    try {
+        const res = await fetch(`/NhanVien/EditApi/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        const result = await res.json();
+        if (result.success) {
+            msgEl.className = 'text-sm px-3 py-2 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-100';
+            msgEl.textContent = result.message;
+            msgEl.classList.remove('hidden');
+            setTimeout(() => window.location.href = '/NhanVien', 1000);
+        } else {
+            msgEl.className = 'text-sm px-3 py-2 rounded-lg bg-red-50 text-red-600 border border-red-100';
+            msgEl.textContent = result.message;
+            msgEl.classList.remove('hidden');
+        }
+    } catch (err) {
+        msgEl.className = 'text-sm px-3 py-2 rounded-lg bg-red-50 text-red-600 border border-red-100';
+        msgEl.textContent = 'Có lỗi xảy ra!';
+        msgEl.classList.remove('hidden');
+    }
+});
+</script>
+}

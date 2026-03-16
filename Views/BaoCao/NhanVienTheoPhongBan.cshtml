@@ -1,0 +1,116 @@
+@model List<PhongBanThongKeViewModel>
+@{
+    ViewData["Title"] = "Báo cáo nhân viên theo phòng ban";
+}
+
+<div class="space-y-6">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <p class="text-sm text-gray-500">Thống kê số lượng nhân viên theo phòng ban</p>
+        @if (!User.IsInRole("Manager"))
+        {
+            <div class="flex gap-3">
+                <select id="filterPhongBan" class="bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-gray-400">
+                    <option value="">Tất cả phòng ban</option>
+                    @if (ViewData["PhongBans"] is List<PhongBan> phongBans)
+                    {
+                        @foreach (var pb in phongBans)
+                        {
+                            <option value="@pb.MaPhongBan" selected="@(ViewData["PhongBanId"]?.ToString() == pb.MaPhongBan.ToString())">@pb.TenPhongBan</option>
+                        }
+                    }
+                </select>
+                <button onclick="filterBaoCao()" class="bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-lg text-sm font-medium transition-colors">Lọc</button>
+            </div>
+        }
+    </div>
+
+    <!-- Chart -->
+    <div id="chartSection" class="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)] p-6">
+        <h2 class="text-base font-semibold text-gray-900 mb-6">Biểu đồ phân bố nhân sự</h2>
+        <div id="chartBars" class="space-y-5"></div>
+    </div>
+
+    <!-- Table -->
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)] overflow-hidden">
+        <table class="w-full text-sm">
+            <thead>
+                <tr class="border-b border-gray-100">
+                    <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase">STT</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase">Phòng ban</th>
+                    <th class="text-right px-6 py-3 text-xs font-medium text-gray-500 uppercase">Số nhân viên</th>
+                    <th class="text-right px-6 py-3 text-xs font-medium text-gray-500 uppercase">Tỷ lệ</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody" class="divide-y divide-gray-50"></tbody>
+            <tfoot>
+                <tr class="border-t border-gray-200 bg-gray-50">
+                    <td colspan="2" class="px-6 py-3 text-sm font-semibold text-gray-900">Tổng cộng</td>
+                    <td id="totalNV" class="px-6 py-3 text-right text-sm font-semibold text-gray-900">0</td>
+                    <td class="px-6 py-3 text-right text-sm font-semibold text-gray-500">100%</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+const colors = ['bg-gray-900','bg-gray-600','bg-gray-400','bg-gray-300','bg-gray-200'];
+
+async function filterBaoCao() {
+    const filterEl = document.getElementById('filterPhongBan');
+    const pbId = filterEl ? filterEl.value : '';
+    const url = pbId ? `/BaoCao/GetThongKePhongBan?phongBanId=${encodeURIComponent(pbId)}` : '/BaoCao/GetThongKePhongBan';
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+        renderChart(data);
+        renderTable(data);
+    } catch(e) {
+        console.error('Lỗi tải dữ liệu:', e);
+    }
+}
+
+function renderChart(data) {
+    const container = document.getElementById('chartBars');
+    if (!data.length) {
+        container.innerHTML = '<p class="text-sm text-gray-400 text-center py-4">Chưa có dữ liệu</p>';
+        return;
+    }
+    const max = Math.max(...data.map(d => d.soNhanVien));
+    container.innerHTML = data.map((d, i) => {
+        const pct = max > 0 ? Math.round(d.soNhanVien / max * 100) : 0;
+        const color = colors[i % colors.length];
+        return `<div class="flex items-center gap-4">
+            <div class="w-32 text-sm text-gray-600 truncate">${d.tenPhongBan}</div>
+            <div class="flex-1 h-3 bg-gray-100 rounded-full overflow-hidden flex">
+                <div class="h-full ${color} rounded-full transition-all duration-500" style="width:${pct}%"></div>
+            </div>
+            <div class="w-12 text-right text-sm font-semibold text-gray-900">${d.soNhanVien}</div>
+        </div>`;
+    }).join('');
+}
+
+function renderTable(data) {
+    const tbody = document.getElementById('tableBody');
+    const total = data.reduce((s, d) => s + d.soNhanVien, 0);
+    document.getElementById('totalNV').textContent = total;
+    if (!data.length) {
+        tbody.innerHTML = '<tr><td colspan="4" class="px-6 py-8 text-center text-gray-400">Chưa có dữ liệu</td></tr>';
+        return;
+    }
+    tbody.innerHTML = data.map((d, i) => {
+        const ratio = total > 0 ? (d.soNhanVien / total * 100).toFixed(1) : 0;
+        return `<tr class="hover:bg-gray-50/50 transition-colors">
+            <td class="px-6 py-4 text-gray-500">${i + 1}</td>
+            <td class="px-6 py-4 font-medium text-gray-900">${d.tenPhongBan}</td>
+            <td class="px-6 py-4 text-right text-gray-900 font-semibold">${d.soNhanVien}</td>
+            <td class="px-6 py-4 text-right text-gray-500">${ratio}%</td>
+        </tr>`;
+    }).join('');
+}
+
+// Load data on page load
+filterBaoCao();
+</script>
+}

@@ -1,0 +1,52 @@
+@model NghiPhep
+@{
+    ViewData["Title"] = "Tạo đơn nghỉ phép";
+}
+
+<div class="max-w-2xl">
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)] p-8">
+        <h2 class="text-lg font-semibold text-gray-900 mb-6">Thông tin nghỉ phép</h2>
+
+        <form asp-action="Create" method="post" class="space-y-5">
+            @Html.AntiForgeryToken()
+
+            <div>
+                <label asp-for="MaNhanVien" class="block text-xs font-medium text-gray-700 mb-1"></label>
+                <select asp-for="MaNhanVien" asp-items="@(ViewData["NhanViens"] as SelectList)" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-gray-400">
+                    <option value="">-- Chọn nhân viên --</option>
+                </select>
+                <span asp-validation-for="MaNhanVien" class="text-xs text-red-500"></span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label asp-for="TuNgay" class="block text-xs font-medium text-gray-700 mb-1"></label>
+                    <input asp-for="TuNgay" type="date" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-gray-400">
+                    <span asp-validation-for="TuNgay" class="text-xs text-red-500"></span>
+                </div>
+                <div>
+                    <label asp-for="DenNgay" class="block text-xs font-medium text-gray-700 mb-1"></label>
+                    <input asp-for="DenNgay" type="date" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-gray-400">
+                    <span asp-validation-for="DenNgay" class="text-xs text-red-500"></span>
+                </div>
+            </div>
+
+            <div>
+                <label asp-for="LyDo" class="block text-xs font-medium text-gray-700 mb-1"></label>
+                <textarea asp-for="LyDo" rows="4" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-gray-400" placeholder="Nêu ngắn gọn lý do nghỉ phép"></textarea>
+                <span asp-validation-for="LyDo" class="text-xs text-red-500"></span>
+            </div>
+
+            <input asp-for="TrangThai" type="hidden" value="Chờ duyệt" />
+
+            <div class="flex gap-3 pt-2">
+                <button type="submit" class="bg-gray-900 text-white hover:bg-gray-800 px-6 py-2.5 rounded-lg text-sm font-medium transition-colors">Lưu đơn nghỉ phép</button>
+                <a asp-action="Index" class="bg-gray-100 text-gray-700 hover:bg-gray-200 px-6 py-2.5 rounded-lg text-sm font-medium transition-colors">Hủy</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

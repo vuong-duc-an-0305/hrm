@@ -1,0 +1,81 @@
+@model IEnumerable<PhongBan>
+@{
+    ViewData["Title"] = "Danh sách phòng ban";
+}
+
+<div class="space-y-6">
+    <div class="flex items-center justify-between">
+        <p class="text-sm text-gray-500">Quản lý các phòng ban trong doanh nghiệp</p>
+        <a asp-action="Create" class="inline-flex items-center gap-2 bg-gray-900 text-white hover:bg-gray-800 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors">
+            <iconify-icon icon="solar:add-circle-linear" width="18"></iconify-icon>
+            Thêm phòng ban
+        </a>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        @foreach (var pb in Model)
+        {
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)] p-6">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="h-10 w-10 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-700">
+                        <iconify-icon icon="solar:buildings-linear" width="20"></iconify-icon>
+                    </div>
+                    <div class="flex gap-1">
+                        <a asp-action="Edit" asp-route-id="@pb.MaPhongBan" class="text-gray-400 hover:text-blue-600 transition-colors p-1" title="Sửa">
+                            <iconify-icon icon="solar:pen-linear" width="16"></iconify-icon>
+                        </a>
+                        <button onclick="deletePhongBan(@pb.MaPhongBan, this)" class="text-gray-400 hover:text-red-600 transition-colors p-1" title="Xóa">
+                            <iconify-icon icon="solar:trash-bin-trash-linear" width="16"></iconify-icon>
+                        </button>
+                    </div>
+                </div>
+                <h3 class="text-base font-semibold text-gray-900 mb-1">@pb.TenPhongBan</h3>
+                <p class="text-xs text-gray-500 mb-4">@pb.MoTa</p>
+                <div class="flex items-center gap-2 text-sm text-gray-600">
+                    <iconify-icon icon="solar:users-group-rounded-linear" width="16" class="text-gray-400"></iconify-icon>
+                    <span>@pb.NhanViens.Count nhân viên</span>
+                </div>
+            </div>
+        }
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="text-center py-12 text-gray-400">
+            <iconify-icon icon="solar:buildings-linear" width="48" class="mb-2"></iconify-icon>
+            <p class="text-sm">Chưa có phòng ban nào</p>
+        </div>
+    }
+</div>
+
+@section Scripts {
+<script>
+async function deletePhongBan(id, btn) {
+    if (!confirm('Bạn có chắc muốn xóa phòng ban này?')) return;
+    try {
+        const res = await fetch(`/PhongBan/DeleteApi/${id}`, { method: 'DELETE' });
+        const data = await res.json();
+        if (data.success) {
+            const card = btn.closest('.bg-white.rounded-2xl');
+            card.style.transition = 'opacity 0.3s, transform 0.3s';
+            card.style.opacity = '0';
+            card.style.transform = 'scale(0.95)';
+            setTimeout(() => card.remove(), 300);
+            showToast(data.message, 'success');
+        } else {
+            showToast(data.message, 'error');
+        }
+    } catch (e) {
+        showToast('Có lỗi xảy ra!', 'error');
+    }
+}
+
+function showToast(message, type) {
+    const toast = document.createElement('div');
+    toast.className = `fixed top-4 right-4 z-50 px-4 py-3 rounded-lg text-sm font-medium shadow-lg transition-all duration-300 ${type === 'success' ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' : 'bg-red-50 text-red-600 border border-red-100'}`;
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 3000);
+}
+</script>
+}

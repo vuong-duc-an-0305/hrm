@@ -1,0 +1,153 @@
+@model IEnumerable<HopDong>
+@{
+    ViewData["Title"] = "Danh sách hợp đồng";
+}
+
+<div class="space-y-6">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <p class="text-sm text-gray-500">Quản lý hợp đồng nhân viên</p>
+        <a asp-action="Create" class="inline-flex items-center gap-2 bg-gray-900 text-white hover:bg-gray-800 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors">
+            <iconify-icon icon="solar:add-circle-linear" width="18"></iconify-icon>
+            Thêm hợp đồng
+        </a>
+    </div>
+
+    <div class="flex gap-3">
+        <div class="relative flex-1 max-w-md">
+            <iconify-icon icon="solar:magnifer-linear" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" width="16"></iconify-icon>
+            <input type="text" id="hdSearch" value="@ViewData["Search"]" placeholder="Tìm theo tên nhân viên..." class="w-full bg-white border border-gray-200 rounded-lg pl-9 pr-4 py-2 text-sm focus:outline-none focus:border-gray-400">
+        </div>
+        <label class="inline-flex items-center gap-2 bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-700">
+            <input id="hdSapHetHan" type="checkbox" class="rounded border-gray-300" @((bool)(ViewData["SapHetHan"] ?? false) ? "checked" : "")>
+            Sắp hết hạn (30 ngày)
+        </label>
+        <button onclick="filterHopDong()" class="bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-lg text-sm font-medium transition-colors">Tìm</button>
+    </div>
+
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)] overflow-hidden">
+        <table class="w-full text-sm">
+            <thead>
+                <tr class="border-b border-gray-100">
+                    <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase">Mã HĐ</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase">Nhân viên</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase">Loại HĐ</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase hidden md:table-cell">Ngày bắt đầu</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase hidden md:table-cell">Ngày kết thúc</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase">Trạng thái</th>
+                    <th class="text-right px-6 py-3 text-xs font-medium text-gray-500 uppercase">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody id="hdTableBody" class="divide-y divide-gray-50">
+                @foreach (var hd in Model)
+                {
+                    <tr class="hover:bg-gray-50/50 transition-colors">
+                        <td class="px-6 py-4 text-gray-500">@hd.MaHopDong</td>
+                        <td class="px-6 py-4 font-medium text-gray-900">@hd.NhanVien?.HoTen</td>
+                        <td class="px-6 py-4 text-gray-600">@hd.LoaiHopDong</td>
+                        <td class="px-6 py-4 text-gray-500 hidden md:table-cell">@hd.NgayBatDau.ToString("dd/MM/yyyy")</td>
+                        <td class="px-6 py-4 text-gray-500 hidden md:table-cell">@hd.NgayKetThuc?.ToString("dd/MM/yyyy")</td>
+                        <td class="px-6 py-4">
+                            <span class="text-xs px-2 py-0.5 rounded-md font-medium @(hd.TrangThai == "Còn hạn" ? "bg-emerald-50 text-emerald-600" : "bg-red-50 text-red-600")">
+                                @hd.TrangThai
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-right">
+                            <button onclick="deleteHopDong(@hd.MaHopDong, this)" class="text-gray-400 hover:text-red-600 transition-colors" title="Xóa">
+                                <iconify-icon icon="solar:trash-bin-trash-linear" width="18"></iconify-icon>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        @if (!Model.Any())
+        {
+            <div id="hdEmpty" class="text-center py-12 text-gray-400">
+                <iconify-icon icon="solar:document-text-linear" width="48" class="mb-2"></iconify-icon>
+                <p class="text-sm">Chưa có hợp đồng nào</p>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+<script>
+// === Fetch API: Lọc hợp đồng ===
+async function filterHopDong() {
+    const search = document.getElementById('hdSearch').value.trim();
+    const sapHetHan = document.getElementById('hdSapHetHan').checked;
+    let url = '/HopDong/SearchApi';
+    const params = [];
+    if (search) params.push(`search=${encodeURIComponent(search)}`);
+    if (sapHetHan) params.push('sapHetHan=true');
+    if (params.length) url += `?${params.join('&')}`;
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+        renderHopDong(data);
+    } catch (e) {
+        console.error('Lỗi tìm kiếm:', e);
+    }
+}
+
+document.getElementById('hdSearch').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') { e.preventDefault(); filterHopDong(); }
+});
+
+function renderHopDong(data) {
+    const tbody = document.getElementById('hdTableBody');
+    const empty = document.getElementById('hdEmpty');
+    if (!data.length) {
+        tbody.innerHTML = '';
+        if (empty) empty.classList.remove('hidden');
+        return;
+    }
+    if (empty) empty.classList.add('hidden');
+    tbody.innerHTML = data.map(hd => {
+        const statusClass = hd.trangThai === 'Còn hạn' ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-600';
+        return `<tr class="hover:bg-gray-50/50 transition-colors">
+            <td class="px-6 py-4 text-gray-500">${hd.maHopDong}</td>
+            <td class="px-6 py-4 font-medium text-gray-900">${hd.nhanVien || ''}</td>
+            <td class="px-6 py-4 text-gray-600">${hd.loaiHopDong || ''}</td>
+            <td class="px-6 py-4 text-gray-500 hidden md:table-cell">${hd.ngayBatDau}</td>
+            <td class="px-6 py-4 text-gray-500 hidden md:table-cell">${hd.ngayKetThuc}</td>
+            <td class="px-6 py-4"><span class="text-xs px-2 py-0.5 rounded-md font-medium ${statusClass}">${hd.trangThai || ''}</span></td>
+            <td class="px-6 py-4 text-right">
+                <button onclick="deleteHopDong(${hd.maHopDong}, this)" class="text-gray-400 hover:text-red-600 transition-colors" title="Xóa">
+                    <iconify-icon icon="solar:trash-bin-trash-linear" width="18"></iconify-icon>
+                </button>
+            </td>
+        </tr>`;
+    }).join('');
+}
+
+// === Fetch API: Xóa hợp đồng ===
+async function deleteHopDong(id, btn) {
+    if (!confirm('Bạn có chắc muốn xóa hợp đồng này?')) return;
+    try {
+        const res = await fetch(`/HopDong/DeleteApi/${id}`, { method: 'DELETE' });
+        const data = await res.json();
+        if (data.success) {
+            const row = btn.closest('tr');
+            row.style.transition = 'opacity 0.3s';
+            row.style.opacity = '0';
+            setTimeout(() => row.remove(), 300);
+            showToast(data.message, 'success');
+        } else {
+            showToast(data.message, 'error');
+        }
+    } catch (e) {
+        showToast('Có lỗi xảy ra!', 'error');
+    }
+}
+
+function showToast(message, type) {
+    const toast = document.createElement('div');
+    toast.className = `fixed top-4 right-4 z-50 px-4 py-3 rounded-lg text-sm font-medium shadow-lg transition-all duration-300 ${type === 'success' ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' : 'bg-red-50 text-red-600 border border-red-100'}`;
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 3000);
+}
+</script>
+}

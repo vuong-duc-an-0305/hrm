@@ -1,0 +1,209 @@
+Tech stack: FE html, css, icon dùng framework, BE asp .net 8, DB sql server 
+
+Đề tài: Quản lý nhân sự trong doanh nghiệp nhỏ
+1. Mục tiêu đề tài
+Quản lý thông tin (CRUD)
+- Hiển thị dữ liệu động qua Ajax hoặc Fetch API
+- Sử dụng kỹ thuật bảo mật cơ bản (Authentication, Authorization,
+Session, Cookie), xác thực người dùng và phân quyền theo vai trò.
+- Áp dụng kỹ thuật Caching để tăng hiệu năng
+- Thiết kế giao diện thân thiện, có báo cáo thống kê
+
+2. Yêu cầu nghiệp vụ, chức năng
+Quản lý thông tin nhân sự, phân phòng ban, hợp đồng và đánh giá.
+- Quản lý hồ sơ nhân sự
+Phân quyền vai trò
+- Báo cáo theo phòng ban
+- Giao diện bảo mật
+
+3. Số trang
+# 1. Trang đăng nhập (Login)
+
+**Chức năng**
+
+- Nhập username và password
+- Xác thực người dùng
+- Tạo Session / Cookie sau khi đăng nhập
+- Điều hướng người dùng vào hệ thống
+- Hiển thị lỗi khi đăng nhập sai
+
+---
+
+# 2. Trang đăng xuất (Logout)
+
+**Chức năng**
+
+- Xóa Session / Cookie đăng nhập
+- Kết thúc phiên làm việc
+- Chuyển về trang đăng nhập
+
+---
+
+# 3. Trang Dashboard (Trang chủ)
+
+**Chức năng**
+
+- Hiển thị tổng quan hệ thống
+- Thống kê tổng số nhân viên
+- Thống kê số phòng ban
+- Thống kê hợp đồng
+- Hiển thị biểu đồ nhân viên theo phòng ban
+- Truy cập nhanh các chức năng chính
+
+---
+
+# 4. Trang danh sách nhân viên
+
+**Chức năng**
+
+- Hiển thị danh sách nhân viên trong hệ thống
+- Tìm kiếm nhân viên theo tên hoặc mã
+- Lọc nhân viên theo phòng ban
+- Phân trang danh sách nhân viên
+- Thực hiện các thao tác: xem chi tiết, sửa, xóa
+
+---
+
+# 5. Trang thêm nhân viên
+
+**Chức năng**
+
+- Nhập thông tin nhân viên mới
+- Kiểm tra dữ liệu hợp lệ (validation)
+- Lưu thông tin nhân viên vào database
+
+---
+
+# 6. Trang chỉnh sửa nhân viên
+
+**Chức năng**
+
+- Cập nhật thông tin nhân viên
+- Hiển thị thông tin hiện tại của nhân viên
+- Lưu thay đổi vào hệ thống
+
+---
+
+# 7. Trang chi tiết nhân viên
+
+**Chức năng**
+
+- Hiển thị đầy đủ thông tin của một nhân viên
+- Hiển thị phòng ban của nhân viên
+- Hiển thị hợp đồng của nhân viên
+- Hiển thị đánh giá của nhân viên
+
+---
+
+# 8. Trang danh sách phòng ban
+
+**Chức năng**
+
+- Hiển thị danh sách các phòng ban
+- Xem số lượng nhân viên trong từng phòng ban
+- Thực hiện các thao tác: thêm, sửa, xóa phòng ban
+
+---
+
+# 9. Trang thêm phòng ban
+
+**Chức năng**
+
+- Nhập thông tin phòng ban mới
+- Lưu thông tin phòng ban vào hệ thống
+
+---
+
+# 10. Trang chỉnh sửa phòng ban
+
+**Chức năng**
+
+- Cập nhật thông tin phòng ban
+- Lưu thay đổi vào database
+
+---
+
+# 11. Trang danh sách hợp đồng
+
+**Chức năng**
+
+- Hiển thị danh sách hợp đồng của nhân viên
+- Tìm kiếm hợp đồng theo nhân viên
+- Xem trạng thái hợp đồng (còn hạn / hết hạn)
+- Thực hiện các thao tác: thêm, sửa, xóa hợp đồng
+
+---
+
+# 12. Trang thêm hợp đồng
+
+**Chức năng**
+
+- Tạo hợp đồng mới cho nhân viên
+- Nhập thông tin loại hợp đồng
+- Nhập ngày bắt đầu và ngày kết thúc
+
+---
+
+# 13. Trang danh sách đánh giá nhân viên
+
+**Chức năng**
+
+- Hiển thị danh sách đánh giá nhân viên
+- Xem điểm đánh giá theo từng kỳ
+- Thực hiện các thao tác: thêm, sửa, xóa đánh giá
+
+---
+
+# 14. Trang thêm đánh giá
+
+**Chức năng**
+
+- Tạo đánh giá mới cho nhân viên
+- Nhập điểm đánh giá
+- Nhập nhận xét
+
+---
+
+# 15. Trang báo cáo nhân viên theo phòng ban
+
+**Chức năng**
+
+- Thống kê số lượng nhân viên theo từng phòng ban
+- Hiển thị dữ liệu dưới dạng biểu đồ hoặc bảng
+- Lọc dữ liệu theo phòng ban
+
+---
+
+# 16. Trang quản lý người dùng (Admin)
+
+**Chức năng**
+
+- Hiển thị danh sách tài khoản người dùng
+- Thêm tài khoản mới
+- Sửa thông tin tài khoản
+- Xóa tài khoản
+
+---
+
+# 17. Trang phân quyền người dùng
+
+**Chức năng**
+
+- Gán vai trò (Role) cho người dùng
+- Quản lý quyền truy cập hệ thống
+
+---
+
+# 18. Trang lỗi 403 (Forbidden)
+
+**Chức năng**
+
+- Thông báo người dùng không có quyền truy cập trang
+
+---
+
+# 19. Trang lỗi 404 (Not Found)
+
+**Chức năng**
+
+- Thông báo trang không tồn tại

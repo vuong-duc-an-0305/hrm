@@ -1,0 +1,296 @@
+<html lang="vi"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm đánh giá - Hệ thống Quản lý Nhân sự</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-900 h-screen w-full flex overflow-hidden selection:bg-gray-200 selection:text-gray-900 antialiased" style="font-family: 'Inter', sans-serif;">
+
+    <!-- Sidebar (Desktop) -->
+    <aside class="w-64 bg-white border-r border-gray-200 flex-col hidden md:flex h-full relative z-20">
+        <!-- Logo -->
+        <div class="h-16 flex items-center px-6 border-b border-gray-100/50">
+            <div class="h-8 w-8 bg-gray-900 rounded-lg flex items-center justify-center text-white mr-3">
+                <span class="text-xs font-semibold tracking-tighter">HRM</span>
+            </div>
+            <span class="text-sm font-semibold tracking-tight text-gray-900">Doanh Nghiệp</span>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-500 hover:text-gray-900 hover:bg-gray-50 rounded-lg text-sm transition-colors">
+                <iconify-icon icon="solar:widget-5-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Tổng quan
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-500 hover:text-gray-900 hover:bg-gray-50 rounded-lg text-sm transition-colors">
+                <iconify-icon icon="solar:users-group-rounded-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Nhân viên
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 bg-gray-50 text-gray-900 rounded-lg text-sm font-medium transition-colors">
+                <iconify-icon icon="solar:clipboard-check-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Đánh giá
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-500 hover:text-gray-900 hover:bg-gray-50 rounded-lg text-sm transition-colors">
+                <iconify-icon icon="solar:city-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Phòng ban
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-500 hover:text-gray-900 hover:bg-gray-50 rounded-lg text-sm transition-colors">
+                <iconify-icon icon="solar:document-text-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Hợp đồng
+            </a>
+            <div class="pt-4 mt-4 border-t border-gray-100"></div>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-500 hover:text-gray-900 hover:bg-gray-50 rounded-lg text-sm transition-colors">
+                <iconify-icon icon="solar:settings-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Cài đặt
+            </a>
+        </nav>
+
+        <!-- User profile snippet -->
+        <div class="p-4 border-t border-gray-100">
+            <div class="flex items-center gap-3 px-2 py-2 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                <div class="h-8 w-8 rounded-full bg-gray-200 border border-gray-300 flex items-center justify-center overflow-hidden">
+                    <iconify-icon icon="solar:user-rounded-linear" class="text-gray-500" width="16" stroke-width="1.5"></iconify-icon>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-gray-900 truncate">Admin</p>
+                    <p class="text-xs text-gray-500 truncate">Quản trị viên</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-full min-w-0 bg-gray-50/50">
+        <!-- Top Header -->
+        <header class="h-16 bg-white/80 backdrop-blur-md border-b border-gray-200 flex items-center justify-between px-6 lg:px-10 sticky top-0 z-10">
+            <div class="flex items-center gap-4">
+                <button class="md:hidden text-gray-500 hover:text-gray-900">
+                    <iconify-icon icon="solar:hamburger-menu-linear" width="24" stroke-width="1.5"></iconify-icon>
+                </button>
+                <div class="flex items-center gap-2 text-sm">
+                    <span class="text-gray-500">Nhân sự</span>
+                    <iconify-icon icon="solar:alt-arrow-right-linear" width="14" class="text-gray-400"></iconify-icon>
+                    <span class="text-gray-500">Đánh giá</span>
+                    <iconify-icon icon="solar:alt-arrow-right-linear" width="14" class="text-gray-400"></iconify-icon>
+                    <h1 class="font-semibold tracking-tight text-gray-900">Thêm mới</h1>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <button class="relative text-gray-500 hover:text-gray-900 transition-colors">
+                    <iconify-icon icon="solar:bell-linear" width="22" stroke-width="1.5"></iconify-icon>
+                </button>
+            </div>
+        </header>
+
+        <!-- Page Content -->
+        <div class="flex-1 overflow-y-auto p-6 lg:p-10">
+            <div class="max-w-4xl mx-auto space-y-8 pb-10">
+                
+                <!-- Page Header & Back -->
+                <div class="flex items-center gap-4">
+                    <button class="p-2 -ml-2 text-gray-400 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors">
+                        <iconify-icon icon="solar:arrow-left-linear" width="20" stroke-width="1.5"></iconify-icon>
+                    </button>
+                    <div>
+                        <h2 class="text-xl font-semibold tracking-tight text-gray-900">Thêm đánh giá mới</h2>
+                        <p class="text-sm text-gray-500 mt-0.5">Tạo phiếu đánh giá năng lực và hiệu suất cho nhân viên.</p>
+                    </div>
+                </div>
+
+                <form class="space-y-6">
+                    <!-- Section 1: Basic Info -->
+                    <div class="bg-white rounded-xl border border-gray-200 shadow-[0_1px_2px_rgba(0,0,0,0.03)] p-6 lg:p-8 space-y-6">
+                        <h3 class="text-base font-semibold tracking-tight text-gray-900 flex items-center gap-2">
+                            <iconify-icon icon="solar:user-id-linear" width="20" class="text-gray-400"></iconify-icon>
+                            Thông tin cơ bản
+                        </h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Employee Select -->
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium text-gray-900">Nhân viên <span class="text-red-500">*</span></label>
+                                <div class="relative">
+                                    <select class="w-full appearance-none bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400/20 transition-all shadow-[0_1px_2px_rgba(0,0,0,0.03)] cursor-pointer">
+                                        <option value="" disabled="" selected="">Chọn nhân viên...</option>
+                                        <option value="1">Nguyễn Văn Hải - Kinh doanh</option>
+                                        <option value="2">Trần Thị Linh - Kỹ thuật</option>
+                                        <option value="3">Lê Văn Đạt - Marketing</option>
+                                    </select>
+                                    <iconify-icon icon="solar:alt-arrow-down-linear" width="16" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></iconify-icon>
+                                </div>
+                            </div>
+
+                            <!-- Period Select -->
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium text-gray-900">Kỳ đánh giá <span class="text-red-500">*</span></label>
+                                <div class="relative">
+                                    <select class="w-full appearance-none bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400/20 transition-all shadow-[0_1px_2px_rgba(0,0,0,0.03)] cursor-pointer">
+                                        <option value="k2-2023" selected="">Kỳ 2 - 2023</option>
+                                        <option value="k1-2023">Kỳ 1 - 2023</option>
+                                    </select>
+                                    <iconify-icon icon="solar:alt-arrow-down-linear" width="16" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></iconify-icon>
+                                </div>
+                            </div>
+
+                            <!-- Evaluator -->
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium text-gray-900">Người đánh giá</label>
+                                <input type="text" value="Admin (Quản trị viên)" disabled="" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-500 cursor-not-allowed">
+                            </div>
+
+                            <!-- Date -->
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium text-gray-900">Ngày thực hiện</label>
+                                <div class="relative">
+                                    <input type="date" value="2023-11-15" class="w-full bg-white border border-gray-200 rounded-lg pl-3 pr-10 py-2 text-sm text-gray-900 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400/20 transition-all shadow-[0_1px_2px_rgba(0,0,0,0.03)] [color-scheme:light]">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: Criteria Scores -->
+                    <div class="bg-white rounded-xl border border-gray-200 shadow-[0_1px_2px_rgba(0,0,0,0.03)] overflow-hidden">
+                        <div class="px-6 py-5 border-b border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                            <h3 class="text-base font-semibold tracking-tight text-gray-900 flex items-center gap-2">
+                                <iconify-icon icon="solar:checklist-minimalistic-linear" width="20" class="text-gray-400"></iconify-icon>
+                                Chi tiết điểm số
+                            </h3>
+                            <span class="text-xs font-medium px-2.5 py-1 bg-gray-100 text-gray-600 rounded-md">Thang điểm: 100</span>
+                        </div>
+                        
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse min-w-[600px]">
+                                <thead>
+                                    <tr class="bg-gray-50/80 border-b border-gray-200">
+                                        <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-tight w-1/3">Tiêu chí đánh giá</th>
+                                        <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-tight w-24 text-center">Trọng số</th>
+                                        <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-tight w-32 text-center">Điểm (0-100)</th>
+                                        <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-tight">Ghi chú / Dẫn chứng</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-100">
+                                    <!-- Criteria 1 -->
+                                    <tr class="hover:bg-gray-50/50 transition-colors">
+                                        <td class="px-6 py-4">
+                                            <div class="text-sm font-medium text-gray-900">Hoàn thành mục tiêu/KPI</div>
+                                            <div class="text-xs text-gray-500 mt-1">Đánh giá dựa trên kết quả công việc thực tế so với kế hoạch đề ra.</div>
+                                        </td>
+                                        <td class="px-6 py-4 text-center">
+                                            <span class="text-sm text-gray-600">50%</span>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <input type="number" min="0" max="100" placeholder="0" class="w-full bg-white border border-gray-200 rounded-md px-2 py-1.5 text-sm text-gray-900 text-center focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400/20 transition-all">
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <input type="text" placeholder="Nhập ghi chú..." class="w-full bg-transparent border-0 border-b border-gray-200 px-0 py-1.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-900 focus:ring-0 transition-colors">
+                                        </td>
+                                    </tr>
+
+                                    <!-- Criteria 2 -->
+                                    <tr class="hover:bg-gray-50/50 transition-colors">
+                                        <td class="px-6 py-4">
+                                            <div class="text-sm font-medium text-gray-900">Kỹ năng chuyên môn</div>
+                                            <div class="text-xs text-gray-500 mt-1">Khả năng áp dụng kiến thức, kỹ năng vào giải quyết công việc.</div>
+                                        </td>
+                                        <td class="px-6 py-4 text-center">
+                                            <span class="text-sm text-gray-600">30%</span>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <input type="number" min="0" max="100" placeholder="0" class="w-full bg-white border border-gray-200 rounded-md px-2 py-1.5 text-sm text-gray-900 text-center focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400/20 transition-all">
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <input type="text" placeholder="Nhập ghi chú..." class="w-full bg-transparent border-0 border-b border-gray-200 px-0 py-1.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-900 focus:ring-0 transition-colors">
+                                        </td>
+                                    </tr>
+
+                                    <!-- Criteria 3 -->
+                                    <tr class="hover:bg-gray-50/50 transition-colors">
+                                        <td class="px-6 py-4">
+                                            <div class="text-sm font-medium text-gray-900">Thái độ &amp; Kỷ luật</div>
+                                            <div class="text-xs text-gray-500 mt-1">Tuân thủ nội quy, tinh thần hợp tác và trách nhiệm trong công việc.</div>
+                                        </td>
+                                        <td class="px-6 py-4 text-center">
+                                            <span class="text-sm text-gray-600">20%</span>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <input type="number" min="0" max="100" placeholder="0" class="w-full bg-white border border-gray-200 rounded-md px-2 py-1.5 text-sm text-gray-900 text-center focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400/20 transition-all">
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <input type="text" placeholder="Nhập ghi chú..." class="w-full bg-transparent border-0 border-b border-gray-200 px-0 py-1.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-900 focus:ring-0 transition-colors">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Total Row -->
+                        <div class="bg-gray-50 px-6 py-4 border-t border-gray-200 flex justify-end items-center gap-6">
+                            <span class="text-sm font-medium text-gray-600">Tổng điểm tạm tính:</span>
+                            <span class="text-xl font-semibold text-gray-900 tracking-tight">0.00</span>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Comments & Result -->
+                    <div class="bg-white rounded-xl border border-gray-200 shadow-[0_1px_2px_rgba(0,0,0,0.03)] p-6 lg:p-8 space-y-6">
+                        <h3 class="text-base font-semibold tracking-tight text-gray-900 flex items-center gap-2">
+                            <iconify-icon icon="solar:chat-line-linear" width="20" class="text-gray-400"></iconify-icon>
+                            Tổng kết &amp; Nhận xét
+                        </h3>
+                        
+                        <div class="space-y-5">
+                            <div>
+                                <label class="text-sm font-medium text-gray-900 block mb-2">Nhận xét chung</label>
+                                <textarea rows="3" placeholder="Nhập đánh giá tổng quan về hiệu suất làm việc của nhân viên trong kỳ..." class="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400/20 transition-all shadow-[0_1px_2px_rgba(0,0,0,0.03)] resize-y"></textarea>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                <div>
+                                    <label class="text-sm font-medium text-gray-900 block mb-2 text-emerald-700">Điểm nổi bật</label>
+                                    <textarea rows="2" placeholder="Những điểm mạnh cần phát huy..." class="w-full bg-white border border-emerald-200/60 rounded-lg px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/20 transition-all shadow-[0_1px_2px_rgba(0,0,0,0.03)] resize-none"></textarea>
+                                </div>
+                                <div>
+                                    <label class="text-sm font-medium text-gray-900 block mb-2 text-amber-700">Cần cải thiện</label>
+                                    <textarea rows="2" placeholder="Những kỹ năng, thái độ cần khắc phục..." class="w-full bg-white border border-amber-200/60 rounded-lg px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400/20 transition-all shadow-[0_1px_2px_rgba(0,0,0,0.03)] resize-none"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="pt-2 border-t border-gray-100 flex items-center justify-between gap-4 mt-2">
+                                <label class="text-sm font-medium text-gray-900">Xếp loại đề xuất</label>
+                                <div class="relative w-48">
+                                    <select class="w-full appearance-none bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-900 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400/20 transition-all cursor-pointer">
+                                        <option value="" disabled="" selected="">Chọn xếp loại...</option>
+                                        <option value="A">A - Xuất sắc</option>
+                                        <option value="B">B - Tiên tiến</option>
+                                        <option value="C">C - Đạt yêu cầu</option>
+                                        <option value="D">D - Cần cố gắng</option>
+                                    </select>
+                                    <iconify-icon icon="solar:alt-arrow-down-linear" width="16" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none"></iconify-icon>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex items-center justify-end gap-3 pt-2">
+                        <button type="button" class="px-5 py-2.5 bg-white border border-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-gray-300 transition-all">
+                            Hủy bỏ
+                        </button>
+                        <button type="button" class="px-5 py-2.5 bg-gray-100 text-gray-900 rounded-lg text-sm font-medium hover:bg-gray-200 transition-all">
+                            Lưu nháp
+                        </button>
+                        <button type="button" class="px-5 py-2.5 bg-gray-900 text-white rounded-lg text-sm font-medium hover:bg-gray-800 transition-all shadow-[0_1px_2px_rgba(0,0,0,0.05)] flex items-center gap-2">
+                            <iconify-icon icon="solar:check-circle-linear" width="18" stroke-width="1.5"></iconify-icon>
+                            Hoàn tất đánh giá
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </main>
+
+
+</body></html>

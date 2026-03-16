@@ -1,0 +1,78 @@
+@model DanhGia
+@{
+    ViewData["Title"] = "Thêm đánh giá";
+}
+
+<div class="max-w-lg">
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)] p-8">
+        <h2 class="text-lg font-semibold text-gray-900 mb-6">Tạo đánh giá mới</h2>
+
+        <form id="createForm" class="space-y-5">
+            @Html.AntiForgeryToken()
+            <div>
+                <label asp-for="MaNhanVien" class="block text-xs font-medium text-gray-700 mb-1">Nhân viên</label>
+                <select asp-for="MaNhanVien" asp-items="@(ViewData["NhanViens"] as SelectList)" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-gray-400">
+                    <option value="">-- Chọn nhân viên --</option>
+                </select>
+                <span asp-validation-for="MaNhanVien" class="text-xs text-red-500"></span>
+            </div>
+            <div>
+                <label asp-for="KyDanhGia" class="block text-xs font-medium text-gray-700 mb-1"></label>
+                <input asp-for="KyDanhGia" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-gray-400" placeholder="Q1-2026">
+                <span asp-validation-for="KyDanhGia" class="text-xs text-red-500"></span>
+            </div>
+            <div>
+                <label asp-for="DiemDanhGia" class="block text-xs font-medium text-gray-700 mb-1"></label>
+                <input asp-for="DiemDanhGia" type="number" min="0" max="10" step="0.5" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-gray-400" placeholder="0 - 10">
+                <span asp-validation-for="DiemDanhGia" class="text-xs text-red-500"></span>
+            </div>
+            <div>
+                <label asp-for="NhanXet" class="block text-xs font-medium text-gray-700 mb-1"></label>
+                <textarea asp-for="NhanXet" rows="4" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-gray-400" placeholder="Nhận xét về nhân viên..."></textarea>
+            </div>
+            <div class="flex gap-3 pt-2">
+                <button type="submit" class="bg-gray-900 text-white hover:bg-gray-800 px-6 py-2.5 rounded-lg text-sm font-medium transition-colors">Lưu đánh giá</button>
+                <a asp-action="Index" class="bg-gray-100 text-gray-700 hover:bg-gray-200 px-6 py-2.5 rounded-lg text-sm font-medium transition-colors">Hủy</a>
+            </div>
+            <div id="formMessage" class="hidden text-sm px-3 py-2 rounded-lg"></div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+document.getElementById('createForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const form = this;
+    const msgEl = document.getElementById('formMessage');
+    const data = {
+        maNhanVien: parseInt(form.querySelector('[name="MaNhanVien"]').value) || 0,
+        kyDanhGia: form.querySelector('[name="KyDanhGia"]').value,
+        diemDanhGia: parseFloat(form.querySelector('[name="DiemDanhGia"]').value) || 0,
+        nhanXet: form.querySelector('[name="NhanXet"]').value || null
+    };
+    try {
+        const res = await fetch('/DanhGia/CreateApi', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        const result = await res.json();
+        if (result.success) {
+            msgEl.className = 'text-sm px-3 py-2 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-100';
+            msgEl.textContent = result.message;
+            msgEl.classList.remove('hidden');
+            setTimeout(() => window.location.href = '/DanhGia', 1000);
+        } else {
+            msgEl.className = 'text-sm px-3 py-2 rounded-lg bg-red-50 text-red-600 border border-red-100';
+            msgEl.textContent = result.message;
+            msgEl.classList.remove('hidden');
+        }
+    } catch (err) {
+        msgEl.className = 'text-sm px-3 py-2 rounded-lg bg-red-50 text-red-600 border border-red-100';
+        msgEl.textContent = 'Có lỗi xảy ra!';
+        msgEl.classList.remove('hidden');
+    }
+});
+</script>
+}

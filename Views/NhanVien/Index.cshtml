@@ -1,0 +1,261 @@
+@model IEnumerable<NhanVien>
+@{
+    ViewData["Title"] = "Danh sách nhân viên";
+    var currentPage = (int)(ViewData["CurrentPage"] ?? 1);
+    var totalPages = (int)(ViewData["TotalPages"] ?? 1);
+}
+
+<div class="space-y-6">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+            <p class="text-sm text-gray-500">Quản lý thông tin nhân viên trong hệ thống</p>
+        </div>
+        <a asp-action="Create" class="inline-flex items-center gap-2 bg-gray-900 text-white hover:bg-gray-800 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors">
+            <iconify-icon icon="solar:add-circle-linear" width="18" stroke-width="1.5"></iconify-icon>
+            Thêm nhân viên
+        </a>
+    </div>
+
+    <!-- Search & Filter -->
+    <div class="flex flex-col sm:flex-row gap-3">
+        <div class="flex gap-3 flex-1">
+            <div class="relative flex-1">
+                <iconify-icon icon="solar:magnifer-linear" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" width="16"></iconify-icon>
+                <input type="text" id="searchInput" value="@ViewData["Search"]" placeholder="Tìm theo tên hoặc mã nhân viên..." class="w-full bg-white border border-gray-200 rounded-lg pl-9 pr-4 py-2 text-sm focus:outline-none focus:border-gray-400 placeholder-gray-400">
+                <!-- Kết quả tìm kiếm Ajax -->
+                <div id="searchResults" class="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50 hidden max-h-64 overflow-y-auto"></div>
+            </div>
+            @if (!User.IsInRole("Manager"))
+            {
+                <select id="filterPhongBan" class="bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-gray-400">
+                    <option value="">Tất cả phòng ban</option>
+                    @if (ViewData["PhongBans"] is SelectList phongBans)
+                    {
+                        @foreach (var item in phongBans)
+                        {
+                            <option value="@item.Value" selected="@(item.Value == ViewData["PhongBanId"]?.ToString())">@item.Text</option>
+                        }
+                    }
+                </select>
+            }
+            <label class="inline-flex items-center gap-2 bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-700">
+                <input id="filterNhanVienMoi" type="checkbox" class="rounded border-gray-300" @((bool)(ViewData["NhanVienMoi"] ?? false) ? "checked" : "")>
+                Nhân viên mới (30 ngày)
+            </label>
+            <button onclick="filterNhanVien()" class="bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-lg text-sm font-medium transition-colors">Lọc</button>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)] overflow-hidden">
+        <table class="w-full text-sm">
+            <thead>
+                <tr class="border-b border-gray-100">
+                    <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Mã NV</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Họ tên</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">Email</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider hidden lg:table-cell">Phòng ban</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider hidden lg:table-cell">Chức vụ</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider hidden xl:table-cell">Ngày onboard</th>
+                    <th class="text-right px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody id="nvTableBody" class="divide-y divide-gray-50">
+                @foreach (var nv in Model)
+                {
+                    <tr class="hover:bg-gray-50/50 transition-colors">
+                        <td class="px-6 py-4 text-gray-500">@nv.MaNhanVien</td>
+                        <td class="px-6 py-4 font-medium text-gray-900">@nv.HoTen</td>
+                        <td class="px-6 py-4 text-gray-500 hidden md:table-cell">@nv.Email</td>
+                        <td class="px-6 py-4 hidden lg:table-cell">
+                            <span class="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-gray-100 text-gray-700">
+                                @(nv.PhongBan?.TenPhongBan ?? "Chưa phân")
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-gray-500 hidden lg:table-cell">@nv.ChucVu</td>
+                        <td class="px-6 py-4 text-gray-500 hidden xl:table-cell">@(nv.NgayVaoLam?.ToString("dd/MM/yyyy") ?? "-")</td>
+                        <td class="px-6 py-4 text-right">
+                            <div class="flex items-center justify-end gap-2">
+                                <a asp-action="Details" asp-route-id="@nv.MaNhanVien" class="text-gray-400 hover:text-gray-900 transition-colors" title="Chi tiết">
+                                    <iconify-icon icon="solar:eye-linear" width="18"></iconify-icon>
+                                </a>
+                                <a asp-action="Edit" asp-route-id="@nv.MaNhanVien" class="text-gray-400 hover:text-blue-600 transition-colors" title="Sửa">
+                                    <iconify-icon icon="solar:pen-linear" width="18"></iconify-icon>
+                                </a>
+                                <button type="button" onclick="deleteNhanVien(@nv.MaNhanVien, this)" class="text-gray-400 hover:text-red-600 transition-colors" title="Xóa">
+                                    <iconify-icon icon="solar:trash-bin-trash-linear" width="18"></iconify-icon>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div id="emptyState" class="text-center py-12 text-gray-400 @(Model.Any() ? "hidden" : "")">
+            <iconify-icon icon="solar:users-group-rounded-linear" width="48" class="mb-2"></iconify-icon>
+            <p class="text-sm">Không có nhân viên nào</p>
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    <div id="pagination" class="flex items-center justify-center gap-2">
+        @if (totalPages > 1)
+        {
+            @for (int i = 1; i <= totalPages; i++)
+            {
+                <button onclick="filterNhanVien(@i)" class="px-3 py-1.5 rounded-lg text-sm @(i == currentPage ? "bg-gray-900 text-white" : "bg-white border border-gray-200 text-gray-600 hover:bg-gray-50") transition-colors">@i</button>
+            }
+        }
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    let currentPage = @currentPage;
+
+    // === Fetch API: Lọc + phân trang nhân viên ===
+    async function filterNhanVien(page) {
+        page = page || 1;
+        currentPage = page;
+        const search = document.getElementById('searchInput').value.trim();
+        const phongBanFilter = document.getElementById('filterPhongBan');
+        const phongBanId = phongBanFilter ? phongBanFilter.value : '';
+        const nhanVienMoi = document.getElementById('filterNhanVienMoi').checked;
+        let url = `/NhanVien/FilterApi?page=${page}`;
+        if (search) url += `&search=${encodeURIComponent(search)}`;
+        if (phongBanId) url += `&phongBanId=${encodeURIComponent(phongBanId)}`;
+        if (nhanVienMoi) url += '&nhanVienMoi=true';
+
+        try {
+            const res = await fetch(url);
+            const result = await res.json();
+            renderTable(result.data);
+            renderPagination(result.totalPages, result.currentPage);
+        } catch (e) {
+            console.error('Lỗi lọc:', e);
+        }
+    }
+
+    function renderTable(data) {
+        const tbody = document.getElementById('nvTableBody');
+        const empty = document.getElementById('emptyState');
+        if (!data.length) {
+            tbody.innerHTML = '';
+            empty.classList.remove('hidden');
+            return;
+        }
+        empty.classList.add('hidden');
+        tbody.innerHTML = data.map(nv => `
+            <tr class="hover:bg-gray-50/50 transition-colors">
+                <td class="px-6 py-4 text-gray-500">${nv.maNhanVien}</td>
+                <td class="px-6 py-4 font-medium text-gray-900">${nv.hoTen}</td>
+                <td class="px-6 py-4 text-gray-500 hidden md:table-cell">${nv.email || ''}</td>
+                <td class="px-6 py-4 hidden lg:table-cell">
+                    <span class="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-gray-100 text-gray-700">${nv.phongBan}</span>
+                </td>
+                <td class="px-6 py-4 text-gray-500 hidden lg:table-cell">${nv.chucVu || ''}</td>
+                <td class="px-6 py-4 text-gray-500 hidden xl:table-cell">${nv.ngayOnboard || '-'}</td>
+                <td class="px-6 py-4 text-right">
+                    <div class="flex items-center justify-end gap-2">
+                        <a href="/NhanVien/Details/${nv.maNhanVien}" class="text-gray-400 hover:text-gray-900 transition-colors" title="Chi tiết">
+                            <iconify-icon icon="solar:eye-linear" width="18"></iconify-icon>
+                        </a>
+                        <a href="/NhanVien/Edit/${nv.maNhanVien}" class="text-gray-400 hover:text-blue-600 transition-colors" title="Sửa">
+                            <iconify-icon icon="solar:pen-linear" width="18"></iconify-icon>
+                        </a>
+                        <button type="button" onclick="deleteNhanVien(${nv.maNhanVien}, this)" class="text-gray-400 hover:text-red-600 transition-colors" title="Xóa">
+                            <iconify-icon icon="solar:trash-bin-trash-linear" width="18"></iconify-icon>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    function renderPagination(totalPages, current) {
+        const container = document.getElementById('pagination');
+        if (totalPages <= 1) { container.innerHTML = ''; return; }
+        container.innerHTML = Array.from({length: totalPages}, (_, i) => i + 1).map(i =>
+            `<button onclick="filterNhanVien(${i})" class="px-3 py-1.5 rounded-lg text-sm ${i === current ? 'bg-gray-900 text-white' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50'} transition-colors">${i}</button>`
+        ).join('');
+    }
+
+    // === Fetch API: Tìm kiếm nhân viên real-time ===
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
+    let searchTimeout;
+
+    searchInput.addEventListener('input', function () {
+        clearTimeout(searchTimeout);
+        const term = this.value.trim();
+
+        if (term.length < 2) {
+            searchResults.classList.add('hidden');
+            searchResults.innerHTML = '';
+            return;
+        }
+
+        searchTimeout = setTimeout(() => {
+            fetch(`/NhanVien/Search?term=${encodeURIComponent(term)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length === 0) {
+                        searchResults.innerHTML = '<div class="px-4 py-3 text-sm text-gray-400">Không tìm thấy kết quả</div>';
+                    } else {
+                        searchResults.innerHTML = data.map(nv =>
+                            `<a href="/NhanVien/Details/${nv.maNhanVien}" class="flex items-center justify-between px-4 py-3 hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-0">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">${nv.hoTen}</p>
+                                    <p class="text-xs text-gray-500">NV-${nv.maNhanVien} · ${nv.email || ''}</p>
+                                </div>
+                                <span class="text-xs px-2 py-0.5 rounded-md bg-gray-100 text-gray-600">${nv.phongBan}</span>
+                            </a>`
+                        ).join('');
+                    }
+                    searchResults.classList.remove('hidden');
+                })
+                .catch(err => console.error('Lỗi tìm kiếm:', err));
+        }, 300);
+    });
+
+    // Enter key triggers filter
+    searchInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') { e.preventDefault(); searchResults.classList.add('hidden'); filterNhanVien(1); }
+    });
+
+    document.addEventListener('click', function (e) {
+        if (!searchInput.contains(e.target) && !searchResults.contains(e.target))
+            searchResults.classList.add('hidden');
+    });
+
+    // === Fetch API: Xóa nhân viên không reload trang ===
+    async function deleteNhanVien(id, btn) {
+        if (!confirm('Bạn có chắc muốn xóa nhân viên này?')) return;
+        try {
+            const res = await fetch(`/NhanVien/DeleteApi/${id}`, { method: 'DELETE' });
+            const data = await res.json();
+            if (data.success) {
+                const row = btn.closest('tr');
+                row.style.transition = 'opacity 0.3s';
+                row.style.opacity = '0';
+                setTimeout(() => row.remove(), 300);
+                showToast(data.message, 'success');
+            } else {
+                showToast(data.message, 'error');
+            }
+        } catch (err) {
+            showToast('Có lỗi xảy ra khi xóa', 'error');
+        }
+    }
+
+    function showToast(message, type) {
+        const toast = document.createElement('div');
+        toast.className = `fixed top-4 right-4 z-50 px-4 py-3 rounded-lg text-sm font-medium shadow-lg transition-all duration-300 ${type === 'success' ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' : 'bg-red-50 text-red-600 border border-red-100'}`;
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 3000);
+    }
+</script>
+}

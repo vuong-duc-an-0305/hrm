@@ -1,0 +1,289 @@
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chỉnh sửa nhân viên - Hệ thống Quản lý Nhân sự</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-900 h-screen w-full flex overflow-hidden selection:bg-gray-200 selection:text-gray-900" style="font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased;">
+
+    <!-- Sidebar (Desktop) -->
+    <aside class="w-64 bg-white border-r border-gray-200 flex-col hidden md:flex h-full relative z-20">
+        <!-- Logo -->
+        <div class="h-16 flex items-center px-6 border-b border-gray-100/50">
+            <div class="h-8 w-8 bg-gray-900 rounded-lg flex items-center justify-center text-white mr-3">
+                <span class="text-xs font-semibold tracking-tighter">HRM</span>
+            </div>
+            <span class="text-sm font-semibold tracking-tight text-gray-900">Doanh Nghiệp</span>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-500 hover:text-gray-900 hover:bg-gray-50 rounded-lg text-sm transition-colors">
+                <iconify-icon icon="solar:widget-5-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Tổng quan
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 bg-gray-50 text-gray-900 rounded-lg text-sm font-medium transition-colors">
+                <iconify-icon icon="solar:users-group-rounded-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Nhân viên
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-500 hover:text-gray-900 hover:bg-gray-50 rounded-lg text-sm transition-colors">
+                <iconify-icon icon="solar:city-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Phòng ban
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-500 hover:text-gray-900 hover:bg-gray-50 rounded-lg text-sm transition-colors">
+                <iconify-icon icon="solar:document-text-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Hợp đồng
+            </a>
+            <div class="pt-4 mt-4 border-t border-gray-100"></div>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-500 hover:text-gray-900 hover:bg-gray-50 rounded-lg text-sm transition-colors">
+                <iconify-icon icon="solar:settings-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Cài đặt
+            </a>
+        </nav>
+
+        <!-- User profile snippet -->
+        <div class="p-4 border-t border-gray-100">
+            <div class="flex items-center gap-3 px-2 py-2 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                <div class="h-8 w-8 rounded-full bg-gray-200 border border-gray-300 flex items-center justify-center overflow-hidden">
+                    <iconify-icon icon="solar:user-rounded-linear" class="text-gray-500" width="16" stroke-width="1.5"></iconify-icon>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-gray-900 truncate">Admin</p>
+                    <p class="text-xs text-gray-500 truncate">Quản trị viên</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-full min-w-0 bg-gray-50/50">
+        <!-- Top Header -->
+        <header class="h-16 bg-white/80 backdrop-blur-md border-b border-gray-200 flex items-center justify-between px-6 lg:px-10 sticky top-0 z-10">
+            <div class="flex items-center gap-4">
+                <button class="md:hidden text-gray-500 hover:text-gray-900">
+                    <iconify-icon icon="solar:hamburger-menu-linear" width="24" stroke-width="1.5"></iconify-icon>
+                </button>
+                <div class="flex items-center gap-2 text-sm">
+                    <a href="#" class="text-gray-500 hover:text-gray-900 transition-colors">Nhân viên</a>
+                    <span class="text-gray-300">/</span>
+                    <span class="font-medium text-gray-900">Chỉnh sửa hồ sơ</span>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <button class="relative text-gray-500 hover:text-gray-900 transition-colors">
+                    <iconify-icon icon="solar:bell-linear" width="22" stroke-width="1.5"></iconify-icon>
+                </button>
+            </div>
+        </header>
+
+        <!-- Form Content -->
+        <div class="flex-1 overflow-y-auto">
+            <div class="max-w-4xl mx-auto p-6 lg:p-10 space-y-8 pb-24">
+                
+                <!-- Page Title & Actions -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h1 class="text-xl font-semibold tracking-tight text-gray-900">Chỉnh sửa thông tin</h1>
+                        <p class="text-sm text-gray-500 mt-1">Cập nhật hồ sơ và thông tin công việc của nhân viên.</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button type="button" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-all focus:outline-none focus:ring-2 focus:ring-gray-200">
+                            Hủy bỏ
+                        </button>
+                        <button type="submit" form="edit-employee-form" class="px-4 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg hover:bg-gray-800 transition-all focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2">
+                            Lưu thay đổi
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <form id="edit-employee-form" class="space-y-6">
+                    
+                    <!-- Section 1: Profile Image & Status -->
+                    <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)] p-6 lg:p-8 flex flex-col sm:flex-row gap-8 items-start">
+                        <div class="flex flex-col items-center gap-4">
+                            <div class="relative group cursor-pointer">
+                                <div class="h-24 w-24 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center text-gray-400 overflow-hidden">
+                                    <span class="text-2xl font-semibold tracking-tighter text-gray-500">HN</span>
+                                </div>
+                                <div class="absolute inset-0 bg-gray-900/40 rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                    <iconify-icon icon="solar:camera-add-linear" class="text-white" width="24" stroke-width="1.5"></iconify-icon>
+                                </div>
+                                <div class="absolute bottom-0 right-0 h-7 w-7 bg-white border border-gray-200 rounded-full flex items-center justify-center text-gray-600 shadow-sm">
+                                    <iconify-icon icon="solar:pen-linear" width="14" stroke-width="1.5"></iconify-icon>
+                                </div>
+                            </div>
+                            <span class="text-xs text-gray-500">JPG, PNG tối đa 2MB</span>
+                        </div>
+                        
+                        <div class="flex-1 space-y-4 pt-2">
+                            <div>
+                                <h2 class="text-lg font-semibold tracking-tight text-gray-900">Hoàng Ngọc Anh</h2>
+                                <p class="text-sm text-gray-500">Chuyên viên Marketing • NV-2023041</p>
+                            </div>
+                            
+                            <div class="pt-2 flex items-center gap-6">
+                                <div class="flex flex-col gap-2">
+                                    <span class="text-sm font-medium text-gray-700">Trạng thái hoạt động</span>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="sr-only peer" checked>
+                                        <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-gray-900"></div>
+                                        <span class="ml-3 text-sm text-gray-600">Đang làm việc</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: Personal Information -->
+                    <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)] overflow-hidden">
+                        <div class="px-6 py-5 border-b border-gray-100 bg-gray-50/50">
+                            <h3 class="text-base font-semibold text-gray-900 flex items-center gap-2">
+                                <iconify-icon icon="solar:user-id-linear" class="text-gray-400" width="18" stroke-width="1.5"></iconify-icon>
+                                Thông tin cá nhân
+                            </h3>
+                        </div>
+                        <div class="p-6 lg:p-8 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                            
+                            <div class="space-y-1.5">
+                                <label class="block text-sm font-medium text-gray-700">Họ và tên <span class="text-red-500">*</span></label>
+                                <input type="text" value="Hoàng Ngọc Anh" class="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-all placeholder-gray-400">
+                            </div>
+
+                            <div class="space-y-1.5">
+                                <label class="block text-sm font-medium text-gray-700">Ngày sinh</label>
+                                <div class="relative">
+                                    <input type="date" value="1995-08-15" class="w-full bg-white border border-gray-200 rounded-lg pl-3 pr-10 py-2 text-sm text-gray-900 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-all appearance-none">
+                                    <iconify-icon icon="solar:calendar-linear" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" width="16" stroke-width="1.5"></iconify-icon>
+                                </div>
+                            </div>
+
+                            <div class="space-y-1.5">
+                                <label class="block text-sm font-medium text-gray-700">Giới tính</label>
+                                <div class="relative">
+                                    <select class="w-full bg-white border border-gray-200 rounded-lg pl-3 pr-10 py-2 text-sm text-gray-900 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-all appearance-none cursor-pointer">
+                                        <option value="male">Nam</option>
+                                        <option value="female" selected>Nữ</option>
+                                        <option value="other">Khác</option>
+                                    </select>
+                                    <iconify-icon icon="solar:alt-arrow-down-linear" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" width="16" stroke-width="1.5"></iconify-icon>
+                                </div>
+                            </div>
+
+                            <div class="space-y-1.5">
+                                <label class="block text-sm font-medium text-gray-700">CMND / CCCD</label>
+                                <input type="text" value="001195012345" class="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-all placeholder-gray-400">
+                            </div>
+
+                            <div class="space-y-1.5 md:col-span-2">
+                                <label class="block text-sm font-medium text-gray-700">Địa chỉ thường trú</label>
+                                <input type="text" value="Số 123, Đường Nguyễn Trãi, Quận Thanh Xuân, Hà Nội" class="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-all placeholder-gray-400">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Contact Information -->
+                    <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)] overflow-hidden">
+                        <div class="px-6 py-5 border-b border-gray-100 bg-gray-50/50">
+                            <h3 class="text-base font-semibold text-gray-900 flex items-center gap-2">
+                                <iconify-icon icon="solar:phone-calling-linear" class="text-gray-400" width="18" stroke-width="1.5"></iconify-icon>
+                                Thông tin liên hệ
+                            </h3>
+                        </div>
+                        <div class="p-6 lg:p-8 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                            
+                            <div class="space-y-1.5">
+                                <label class="block text-sm font-medium text-gray-700">Số điện thoại <span class="text-red-500">*</span></label>
+                                <div class="relative">
+                                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm border-r border-gray-200 pr-2">+84</span>
+                                    <input type="tel" value="987654321" class="w-full bg-white border border-gray-200 rounded-lg pl-14 pr-3 py-2 text-sm text-gray-900 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-all placeholder-gray-400">
+                                </div>
+                            </div>
+
+                            <div class="space-y-1.5">
+                                <label class="block text-sm font-medium text-gray-700">Email cá nhân</label>
+                                <div class="relative">
+                                    <iconify-icon icon="solar:letter-linear" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" width="16" stroke-width="1.5"></iconify-icon>
+                                    <input type="email" value="ngocanh.hoang@gmail.com" class="w-full bg-white border border-gray-200 rounded-lg pl-9 pr-3 py-2 text-sm text-gray-900 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-all placeholder-gray-400">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 4: Employment Information -->
+                    <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)] overflow-hidden">
+                        <div class="px-6 py-5 border-b border-gray-100 bg-gray-50/50">
+                            <h3 class="text-base font-semibold text-gray-900 flex items-center gap-2">
+                                <iconify-icon icon="solar:suitcase-linear" class="text-gray-400" width="18" stroke-width="1.5"></iconify-icon>
+                                Thông tin công việc
+                            </h3>
+                        </div>
+                        <div class="p-6 lg:p-8 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                            
+                            <div class="space-y-1.5">
+                                <label class="block text-sm font-medium text-gray-700">Mã nhân viên</label>
+                                <input type="text" value="NV-2023041" disabled class="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-500 cursor-not-allowed">
+                                <p class="text-xs text-gray-400 mt-1">Mã nhân viên được tạo tự động và không thể thay đổi.</p>
+                            </div>
+
+                            <div class="space-y-1.5">
+                                <label class="block text-sm font-medium text-gray-700">Email công ty <span class="text-red-500">*</span></label>
+                                <div class="relative">
+                                    <iconify-icon icon="solar:letter-linear" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" width="16" stroke-width="1.5"></iconify-icon>
+                                    <input type="email" value="anh.hn@doanhnghiep.vn" class="w-full bg-white border border-gray-200 rounded-lg pl-9 pr-3 py-2 text-sm text-gray-900 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-all placeholder-gray-400">
+                                </div>
+                            </div>
+
+                            <div class="space-y-1.5">
+                                <label class="block text-sm font-medium text-gray-700">Phòng ban</label>
+                                <div class="relative">
+                                    <select class="w-full bg-white border border-gray-200 rounded-lg pl-3 pr-10 py-2 text-sm text-gray-900 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-all appearance-none cursor-pointer">
+                                        <option value="it">Kỹ thuật</option>
+                                        <option value="marketing" selected>Marketing</option>
+                                        <option value="sales">Kinh doanh</option>
+                                        <option value="hr">Hành chính NS</option>
+                                        <option value="accounting">Kế toán</option>
+                                    </select>
+                                    <iconify-icon icon="solar:alt-arrow-down-linear" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" width="16" stroke-width="1.5"></iconify-icon>
+                                </div>
+                            </div>
+
+                            <div class="space-y-1.5">
+                                <label class="block text-sm font-medium text-gray-700">Chức vụ</label>
+                                <input type="text" value="Chuyên viên" class="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-all placeholder-gray-400">
+                            </div>
+
+                            <div class="space-y-1.5">
+                                <label class="block text-sm font-medium text-gray-700">Ngày bắt đầu làm việc</label>
+                                <div class="relative">
+                                    <input type="date" value="2023-04-01" class="w-full bg-white border border-gray-200 rounded-lg pl-3 pr-10 py-2 text-sm text-gray-900 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-all appearance-none">
+                                    <iconify-icon icon="solar:calendar-linear" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" width="16" stroke-width="1.5"></iconify-icon>
+                                </div>
+                            </div>
+
+                            <div class="space-y-1.5">
+                                <label class="block text-sm font-medium text-gray-700">Loại hợp đồng</label>
+                                <div class="relative">
+                                    <select class="w-full bg-white border border-gray-200 rounded-lg pl-3 pr-10 py-2 text-sm text-gray-900 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-all appearance-none cursor-pointer">
+                                        <option value="probation">Thử việc</option>
+                                        <option value="1year">Xác định thời hạn 1 năm</option>
+                                        <option value="3year">Xác định thời hạn 3 năm</option>
+                                        <option value="indefinite" selected>Không xác định thời hạn</option>
+                                    </select>
+                                    <iconify-icon icon="solar:alt-arrow-down-linear" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" width="16" stroke-width="1.5"></iconify-icon>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,205 @@
+@model DashboardViewModel
+@{
+    ViewData["Title"] = "Tổng quan";
+}
+
+<div class="space-y-8">
+    <!-- Stats Row -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+        <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)]">
+            <div class="flex justify-between items-start mb-4">
+                <span class="text-sm font-medium text-gray-500">Tổng nhân viên</span>
+                <div class="h-8 w-8 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-700">
+                    <iconify-icon icon="solar:users-group-two-rounded-linear" width="18" stroke-width="1.5"></iconify-icon>
+                </div>
+            </div>
+            <span id="statNhanVien" class="text-3xl font-semibold tracking-tight text-gray-900">@Model.TongNhanVien</span>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)]">
+            <div class="flex justify-between items-start mb-4">
+                <span class="text-sm font-medium text-gray-500">Số phòng ban</span>
+                <div class="h-8 w-8 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-700">
+                    <iconify-icon icon="solar:buildings-linear" width="18" stroke-width="1.5"></iconify-icon>
+                </div>
+            </div>
+            <div class="flex items-baseline gap-2">
+                <span id="statPhongBan" class="text-3xl font-semibold tracking-tight text-gray-900">@Model.TongPhongBan</span>
+                <span class="text-xs font-medium text-gray-400">Đang hoạt động</span>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)]">
+            <div class="flex justify-between items-start mb-4">
+                <span class="text-sm font-medium text-gray-500">Hợp đồng có hiệu lực</span>
+                <div class="h-8 w-8 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-700">
+                    <iconify-icon icon="solar:file-check-linear" width="18" stroke-width="1.5"></iconify-icon>
+                </div>
+            </div>
+            <div class="flex items-baseline gap-2">
+                <span id="statHopDong" class="text-3xl font-semibold tracking-tight text-gray-900">@Model.HopDongConHan</span>
+                @if (Model.HopDongHetHan > 0)
+                {
+                    <span class="text-xs font-medium text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded-md">
+                        @Model.HopDongHetHan hết hạn
+                    </span>
+                }
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)]">
+            <div class="flex justify-between items-start mb-4">
+                <span class="text-sm font-medium text-gray-500">Hợp đồng sắp hết hạn</span>
+                <div class="h-8 w-8 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-700">
+                    <iconify-icon icon="solar:alarm-linear" width="18" stroke-width="1.5"></iconify-icon>
+                </div>
+            </div>
+            <span id="statHopDongSapHetHan" class="text-3xl font-semibold tracking-tight text-gray-900">@Model.HopDongSapHetHan</span>
+            <p class="text-xs text-gray-400 mt-1">Trong vòng 30 ngày tới</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)]">
+            <div class="flex justify-between items-start mb-4">
+                <span class="text-sm font-medium text-gray-500">Người dùng hệ thống</span>
+                <div class="h-8 w-8 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-700">
+                    <iconify-icon icon="solar:user-id-linear" width="18" stroke-width="1.5"></iconify-icon>
+                </div>
+            </div>
+            <span id="statNguoiDung" class="text-3xl font-semibold tracking-tight text-gray-900">@Model.TongNguoiDung</span>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)]">
+            <div class="flex justify-between items-start mb-4">
+                <span class="text-sm font-medium text-gray-500">Nhân viên mới tháng này</span>
+                <div class="h-8 w-8 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-700">
+                    <iconify-icon icon="solar:user-plus-linear" width="18" stroke-width="1.5"></iconify-icon>
+                </div>
+            </div>
+            <span id="statNhanVienMoi" class="text-3xl font-semibold tracking-tight text-gray-900">@Model.NhanVienMoiThangNay</span>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)] p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-base font-semibold text-gray-900">Trạng thái nghỉ phép</h2>
+                <a asp-controller="NghiPhep" asp-action="Index" class="text-xs font-medium text-gray-500 hover:text-gray-900">Quản lý</a>
+            </div>
+            <div class="grid grid-cols-3 gap-3">
+                <div class="bg-amber-50 rounded-xl p-4 border border-amber-100">
+                    <p class="text-xs text-amber-700 mb-1">Chờ duyệt</p>
+                    <p id="statNghiPhepChoDuyet" class="text-2xl font-semibold text-amber-900">@Model.DonNghiPhepChoDuyet</p>
+                </div>
+                <div class="bg-emerald-50 rounded-xl p-4 border border-emerald-100">
+                    <p class="text-xs text-emerald-700 mb-1">Đã duyệt</p>
+                    <p id="statNghiPhepDaDuyet" class="text-2xl font-semibold text-emerald-900">@Model.DonNghiPhepDaDuyet</p>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs text-gray-600 mb-1">Tổng đơn</p>
+                    <p id="statTongNghiPhep" class="text-2xl font-semibold text-gray-900">@Model.TongDonNghiPhep</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)] p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-base font-semibold text-gray-900">Tình hình tuyển dụng</h2>
+                <a asp-controller="TuyenDung" asp-action="Index" class="text-xs font-medium text-gray-500 hover:text-gray-900">Quản lý</a>
+            </div>
+            <div class="grid grid-cols-3 gap-3">
+                <div class="bg-sky-50 rounded-xl p-4 border border-sky-100">
+                    <p class="text-xs text-sky-700 mb-1">Đang tuyển</p>
+                    <p id="statDangTuyen" class="text-2xl font-semibold text-sky-900">@Model.ViTriDangTuyen</p>
+                </div>
+                <div class="bg-emerald-50 rounded-xl p-4 border border-emerald-100">
+                    <p class="text-xs text-emerald-700 mb-1">Đã tuyển đủ</p>
+                    <p id="statDaTuyenDu" class="text-2xl font-semibold text-emerald-900">@Model.ViTriDaTuyenDu</p>
+                </div>
+                <div class="bg-red-50 rounded-xl p-4 border border-red-100">
+                    <p class="text-xs text-red-700 mb-1">Dừng tuyển</p>
+                    <p id="statDungTuyen" class="text-2xl font-semibold text-red-900">@Model.ViTriDungTuyen</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart -->
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)] p-6">
+        <div class="flex items-center justify-between mb-8">
+            <div>
+                <h2 class="text-base font-semibold text-gray-900">Phân bố nhân sự</h2>
+                <p class="text-xs text-gray-500 mt-1">Số lượng nhân viên theo từng phòng ban</p>
+            </div>
+            <a asp-controller="BaoCao" asp-action="NhanVienTheoPhongBan" class="text-xs font-medium text-gray-500 hover:text-gray-900 flex items-center gap-1 transition-colors">
+                Chi tiết
+                <iconify-icon icon="solar:alt-arrow-right-linear" width="14" stroke-width="1.5"></iconify-icon>
+            </a>
+        </div>
+
+        <div id="chartContainer" class="space-y-5">
+            <div class="text-center py-4">
+                <p class="text-sm text-gray-400">Đang tải dữ liệu...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    // === Fetch API: Load biểu đồ phân bố nhân sự ===
+    document.addEventListener('DOMContentLoaded', function () {
+        const chartContainer = document.getElementById('chartContainer');
+        const colors = ['bg-gray-900', 'bg-gray-600', 'bg-gray-400', 'bg-gray-300', 'bg-gray-200'];
+
+        fetch('/Dashboard/GetStats')
+            .then(response => response.json())
+            .then(data => {
+                const phongBans = data.thongKePhongBan;
+                if (!phongBans || phongBans.length === 0) {
+                    chartContainer.innerHTML = '<p class="text-sm text-gray-400 text-center py-4">Chưa có dữ liệu phòng ban</p>';
+                    return;
+                }
+
+                const maxNV = Math.max(...phongBans.map(p => p.soNhanVien), 1);
+                chartContainer.innerHTML = phongBans.map((pb, i) => {
+                    const pct = Math.round((pb.soNhanVien / maxNV) * 100);
+                    const color = colors[i % colors.length];
+                    return `<div class="flex items-center gap-4">
+                        <div class="w-28 text-sm text-gray-600 truncate">${pb.tenPhongBan}</div>
+                        <div class="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden flex">
+                            <div class="h-full ${color} rounded-full transition-all duration-700" style="width: 0%;"></div>
+                        </div>
+                        <div class="w-10 text-right text-sm font-medium text-gray-900">${pb.soNhanVien}</div>
+                    </div>`;
+                }).join('');
+
+                // Animation: bars grow after render
+                setTimeout(() => {
+                    const bars = chartContainer.querySelectorAll('.rounded-full.transition-all');
+                    phongBans.forEach((pb, i) => {
+                        const pct = Math.round((pb.soNhanVien / maxNV) * 100);
+                        if (bars[i]) bars[i].style.width = pct + '%';
+                    });
+                }, 50);
+
+                // Cập nhật stats cards nếu cần
+                document.getElementById('statNhanVien').textContent = data.tongNhanVien;
+                document.getElementById('statPhongBan').textContent = data.tongPhongBan;
+                document.getElementById('statHopDong').textContent = data.hopDongConHan;
+                document.getElementById('statHopDongSapHetHan').textContent = data.hopDongSapHetHan;
+                document.getElementById('statNguoiDung').textContent = data.tongNguoiDung;
+                document.getElementById('statNhanVienMoi').textContent = data.nhanVienMoiThangNay;
+                document.getElementById('statNghiPhepChoDuyet').textContent = data.donNghiPhepChoDuyet;
+                document.getElementById('statNghiPhepDaDuyet').textContent = data.donNghiPhepDaDuyet;
+                document.getElementById('statTongNghiPhep').textContent = data.tongDonNghiPhep;
+                document.getElementById('statDangTuyen').textContent = data.viTriDangTuyen;
+                document.getElementById('statDaTuyenDu').textContent = data.viTriDaTuyenDu;
+                document.getElementById('statDungTuyen').textContent = data.viTriDungTuyen;
+            })
+            .catch(err => {
+                console.error('Lỗi tải Dashboard:', err);
+                chartContainer.innerHTML = '<p class="text-sm text-red-400 text-center py-4">Lỗi tải dữ liệu</p>';
+            });
+    });
+</script>
+}

@@ -1,0 +1,120 @@
+@model IEnumerable<PhanQuyenViewModel>
+@{
+    ViewData["Title"] = "Phân quyền người dùng";
+}
+
+<div class="space-y-6">
+    <p class="text-sm text-gray-500">Gán vai trò và quản lý quyền truy cập hệ thống</p>
+
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)] overflow-hidden">
+        <table class="w-full text-sm">
+            <thead>
+                <tr class="border-b border-gray-100">
+                    <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase">Tên đăng nhập</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase">Họ tên</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase">Vai trò hiện tại</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase">Phòng ban quản lý</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase">Gán vai trò</th>
+                    <th class="text-right px-6 py-3 text-xs font-medium text-gray-500 uppercase">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-50">
+                @foreach (var user in Model)
+                {
+                    <tr class="hover:bg-gray-50/50 transition-colors">
+                        <td class="px-6 py-4 font-medium text-gray-900">@user.TenDangNhap</td>
+                        <td class="px-6 py-4 text-gray-600">@user.HoTen</td>
+                        <td class="px-6 py-4">
+                            <span class="text-xs px-2 py-0.5 rounded-md font-medium bg-gray-100 text-gray-700">
+                                @(user.TenVaiTro ?? "Chưa gán")
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-gray-600">
+                            <span class="text-xs px-2 py-0.5 rounded-md font-medium bg-gray-100 text-gray-700 currentPhongBan">
+                                @(user.TenPhongBan ?? "-")
+                            </span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center gap-2">
+                                <input type="hidden" class="userId" value="@user.MaNguoiDung" />
+                                <select class="roleSelect border border-gray-200 rounded-lg px-2 py-1.5 text-sm focus:outline-none focus:border-gray-400">
+                                    @foreach (var vt in user.DanhSachVaiTro)
+                                    {
+                                        <option value="@vt.MaVaiTro" selected="@(vt.MaVaiTro == user.MaVaiTro)">@vt.TenVaiTro</option>
+                                    }
+                                </select>
+                                <select class="phongBanSelect border border-gray-200 rounded-lg px-2 py-1.5 text-sm focus:outline-none focus:border-gray-400" @(user.MaVaiTro == 2 ? "" : "disabled")>
+                                    <option value="">-- Chọn phòng ban --</option>
+                                    @foreach (var pb in user.DanhSachPhongBan)
+                                    {
+                                        <option value="@pb.MaPhongBan" selected="@(pb.MaPhongBan == user.MaPhongBan)">@pb.TenPhongBan</option>
+                                    }
+                                </select>
+                                <button onclick="updatePhanQuyen(this)" class="bg-gray-900 text-white hover:bg-gray-800 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors">Lưu</button>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-right"></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+// === Fetch API: Cập nhật phân quyền ===
+async function updatePhanQuyen(btn) {
+    const td = btn.closest('td');
+    const userId = td.querySelector('.userId').value;
+    const roleId = td.querySelector('.roleSelect').value;
+    const phongBanSelect = td.querySelector('.phongBanSelect');
+    const maPhongBan = roleId === '2' ? (parseInt(phongBanSelect.value) || null) : null;
+
+    if (roleId === '2' && !maPhongBan) {
+        showToast('Vui lòng chọn phòng ban cho Manager', 'error');
+        return;
+    }
+
+    try {
+        const res = await fetch('/Admin/UpdatePhanQuyenApi', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ maNguoiDung: parseInt(userId), maVaiTro: parseInt(roleId), maPhongBan: maPhongBan })
+        });
+        const data = await res.json();
+        if (data.success) {
+            // Update "Vai trò hiện tại" column
+            const row = btn.closest('tr');
+            const roleCell = row.querySelector('td:nth-child(3) span');
+            const phongBanCell = row.querySelector('.currentPhongBan');
+            if (roleCell && data.tenVaiTro) roleCell.textContent = data.tenVaiTro;
+            if (phongBanCell) phongBanCell.textContent = data.tenPhongBan || '-';
+            showToast(data.message, 'success');
+        } else {
+            showToast(data.message, 'error');
+        }
+    } catch (e) {
+        showToast('Có lỗi xảy ra!', 'error');
+    }
+}
+
+function showToast(message, type) {
+    const toast = document.createElement('div');
+    toast.className = `fixed top-4 right-4 z-50 px-4 py-3 rounded-lg text-sm font-medium shadow-lg transition-all duration-300 ${type === 'success' ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' : 'bg-red-50 text-red-600 border border-red-100'}`;
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 3000);
+}
+
+document.querySelectorAll('.roleSelect').forEach(select => {
+    select.addEventListener('change', function() {
+        const td = this.closest('td');
+        const phongBanSelect = td.querySelector('.phongBanSelect');
+        const isManager = this.value === '2';
+        phongBanSelect.disabled = !isManager;
+        if (!isManager) phongBanSelect.value = '';
+    });
+});
+</script>
+}

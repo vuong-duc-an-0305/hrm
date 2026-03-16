@@ -1,0 +1,199 @@
+<html lang="vi"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chỉnh sửa phòng ban - Hệ thống Quản lý Nhân sự</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-900 h-screen w-full flex overflow-hidden selection:bg-gray-200 selection:text-gray-900" style="font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased;">
+
+    <!-- Sidebar (Desktop) -->
+    <aside class="w-64 bg-white border-r border-gray-200 flex-col hidden md:flex h-full relative z-20">
+        <!-- Logo -->
+        <div class="h-16 flex items-center px-6 border-b border-gray-100/50">
+            <div class="h-8 w-8 bg-gray-900 rounded-lg flex items-center justify-center text-white mr-3">
+                <span class="text-xs font-semibold tracking-tighter">HRM</span>
+            </div>
+            <span class="text-sm font-semibold tracking-tight text-gray-900">Doanh Nghiệp</span>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-500 hover:text-gray-900 hover:bg-gray-50 rounded-lg text-sm transition-colors">
+                <iconify-icon icon="solar:widget-5-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Tổng quan
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-500 hover:text-gray-900 hover:bg-gray-50 rounded-lg text-sm transition-colors">
+                <iconify-icon icon="solar:users-group-rounded-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Nhân viên
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 bg-gray-50 text-gray-900 rounded-lg text-sm font-medium transition-colors">
+                <iconify-icon icon="solar:city-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Phòng ban
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-500 hover:text-gray-900 hover:bg-gray-50 rounded-lg text-sm transition-colors">
+                <iconify-icon icon="solar:document-text-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Hợp đồng
+            </a>
+            <div class="pt-4 mt-4 border-t border-gray-100"></div>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-500 hover:text-gray-900 hover:bg-gray-50 rounded-lg text-sm transition-colors">
+                <iconify-icon icon="solar:settings-linear" width="20" stroke-width="1.5"></iconify-icon>
+                Cài đặt
+            </a>
+        </nav>
+
+        <!-- User profile snippet -->
+        <div class="p-4 border-t border-gray-100">
+            <div class="flex items-center gap-3 px-2 py-2 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                <div class="h-8 w-8 rounded-full bg-gray-200 border border-gray-300 flex items-center justify-center overflow-hidden">
+                    <iconify-icon icon="solar:user-rounded-linear" class="text-gray-500" width="16" stroke-width="1.5"></iconify-icon>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-gray-900 truncate">Admin</p>
+                    <p class="text-xs text-gray-500 truncate">Quản trị viên</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-full min-w-0 bg-gray-50/50">
+        <!-- Top Header -->
+        <header class="h-16 bg-white/80 backdrop-blur-md border-b border-gray-200 flex items-center justify-between px-6 lg:px-10 sticky top-0 z-10">
+            <div class="flex items-center gap-4">
+                <button class="md:hidden text-gray-500 hover:text-gray-900">
+                    <iconify-icon icon="solar:hamburger-menu-linear" width="24" stroke-width="1.5"></iconify-icon>
+                </button>
+                <div class="flex items-center gap-2">
+                    <span class="text-sm font-medium text-gray-500 hidden sm:block">Phòng ban</span>
+                    <iconify-icon icon="solar:alt-arrow-right-linear" width="16" class="text-gray-400 hidden sm:block" stroke-width="1.5"></iconify-icon>
+                    <h1 class="text-base sm:text-xl font-semibold tracking-tight text-gray-900">Chỉnh sửa</h1>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <div class="relative hidden sm:block">
+                    <iconify-icon icon="solar:magnifer-linear" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" width="16" stroke-width="1.5"></iconify-icon>
+                    <input type="text" placeholder="Tìm kiếm..." class="w-64 bg-gray-50 border border-gray-200 rounded-full pl-9 pr-4 py-1.5 text-sm focus:outline-none focus:border-gray-400 focus:bg-white transition-all placeholder-gray-400">
+                </div>
+                <button class="relative text-gray-500 hover:text-gray-900 transition-colors">
+                    <iconify-icon icon="solar:bell-linear" width="22" stroke-width="1.5"></iconify-icon>
+                    <span class="absolute top-0.5 right-0.5 w-2 h-2 bg-red-500 border-2 border-white rounded-full"></span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Page Content -->
+        <div class="flex-1 overflow-y-auto p-6 lg:p-10">
+            <div class="max-w-3xl mx-auto space-y-6">
+                
+                <!-- Page Title Area -->
+                <div class="flex items-start gap-4 mb-2">
+                    <button class="mt-1 h-8 w-8 flex items-center justify-center rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-500 transition-colors flex-shrink-0 shadow-sm">
+                        <iconify-icon icon="solar:arrow-left-linear" width="18" stroke-width="1.5"></iconify-icon>
+                    </button>
+                    <div>
+                        <h2 class="text-xl lg:text-2xl font-semibold tracking-tight text-gray-900">Chỉnh sửa phòng ban</h2>
+                        <p class="text-sm text-gray-500 mt-1">Cập nhật thông tin chi tiết và cài đặt của phòng ban hiện tại.</p>
+                    </div>
+                </div>
+
+                <!-- Form Card -->
+                <form class="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.03)] overflow-hidden">
+                    <div class="p-6 sm:p-8 space-y-8">
+                        
+                        <!-- Section: Basic Information -->
+                        <div class="space-y-6">
+                            <h3 class="text-sm font-medium text-gray-900 border-b border-gray-100 pb-3">Thông tin chi tiết</h3>
+                            
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <!-- Code Input -->
+                                <div class="space-y-2">
+                                    <label class="text-sm font-medium text-gray-700 block">Mã phòng ban <span class="text-red-500">*</span></label>
+                                    <input type="text" value="MKT" placeholder="VD: MKT, TECH..." class="w-full bg-white border border-gray-200 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900/10 focus:border-gray-900 transition-all placeholder-gray-400 text-gray-900 shadow-sm">
+                                </div>
+                                
+                                <!-- Name Input -->
+                                <div class="space-y-2">
+                                    <label class="text-sm font-medium text-gray-700 block">Tên phòng ban <span class="text-red-500">*</span></label>
+                                    <input type="text" value="Marketing &amp; Truyền thông" placeholder="VD: Marketing &amp; Truyền thông" class="w-full bg-white border border-gray-200 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900/10 focus:border-gray-900 transition-all placeholder-gray-400 text-gray-900 shadow-sm">
+                                </div>
+                            </div>
+
+                            <!-- Parent Department Dropdown -->
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium text-gray-700 block">Phòng ban trực thuộc</label>
+                                <div class="relative">
+                                    <select class="w-full bg-white border border-gray-200 rounded-xl px-3.5 py-2.5 text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-gray-900/10 focus:border-gray-900 transition-all text-gray-900 shadow-sm cursor-pointer">
+                                        <option value="">-- Là phòng ban độc lập --</option>
+                                        <option value="1">Ban Giám đốc</option>
+                                        <option value="2" selected="">Khối Kinh doanh</option>
+                                        <option value="3">Khối Kỹ thuật</option>
+                                    </select>
+                                    <div class="absolute inset-y-0 right-0 flex items-center pr-3.5 pointer-events-none text-gray-400">
+                                        <iconify-icon icon="solar:alt-arrow-down-linear" width="18" stroke-width="1.5"></iconify-icon>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1.5">Để trống nếu đây là phòng ban cấp cao nhất.</p>
+                            </div>
+
+                            <!-- Department Head Dropdown -->
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium text-gray-700 block">Trưởng phòng</label>
+                                <div class="relative">
+                                    <select class="w-full bg-white border border-gray-200 rounded-xl px-3.5 py-2.5 text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-gray-900/10 focus:border-gray-900 transition-all text-gray-900 shadow-sm cursor-pointer">
+                                        <option value="" disabled="">Chọn người quản lý</option>
+                                        <option value="nv1" selected="">NV001 - Nguyễn Văn A</option>
+                                        <option value="nv2">NV002 - Trần Thị B</option>
+                                        <option value="nv3">NV003 - Lê Văn C</option>
+                                    </select>
+                                    <div class="absolute inset-y-0 right-0 flex items-center pr-3.5 pointer-events-none text-gray-400">
+                                        <iconify-icon icon="solar:alt-arrow-down-linear" width="18" stroke-width="1.5"></iconify-icon>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Description Textarea -->
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium text-gray-700 block">Mô tả chức năng</label>
+                                <textarea rows="4" placeholder="Nhập mô tả về vai trò, nhiệm vụ chính của phòng ban..." class="w-full bg-white border border-gray-200 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900/10 focus:border-gray-900 transition-all placeholder-gray-400 text-gray-900 resize-none shadow-sm">Chịu trách nhiệm về các hoạt động marketing, quảng bá thương hiệu, tổ chức sự kiện và truyền thông nội bộ của công ty.</textarea>
+                            </div>
+                        </div>
+
+                        <!-- Section: Settings -->
+                        <div class="space-y-6 pt-2">
+                            <h3 class="text-sm font-medium text-gray-900 border-b border-gray-100 pb-3">Cài đặt hệ thống</h3>
+                            
+                            <!-- Custom Toggle -->
+                            <div class="flex items-center justify-between bg-gray-50/50 p-4 rounded-xl border border-gray-100">
+                                <div>
+                                    <h4 class="text-sm font-medium text-gray-900">Trạng thái hoạt động</h4>
+                                    <p class="text-xs text-gray-500 mt-0.5">Cho phép thêm nhân viên và sử dụng trên hệ thống</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer flex-shrink-0">
+                                    <input type="checkbox" value="" class="sr-only peer" checked="">
+                                    <div class="w-10 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-gray-900"></div>
+                                </label>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <!-- Footer / Actions -->
+                    <div class="px-6 py-4 bg-gray-50 border-t border-gray-100 flex items-center justify-end gap-3 sm:px-8">
+                        <button type="button" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-200 transition-all">
+                            Hủy bỏ
+                        </button>
+                        <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-gray-900 border border-transparent rounded-xl hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 transition-all shadow-sm flex items-center gap-2">
+                            <iconify-icon icon="solar:diskette-linear" width="16" stroke-width="1.5"></iconify-icon>
+                            Cập nhật thông tin
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </main>
+
+</body></html>
