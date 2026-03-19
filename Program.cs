@@ -71,6 +71,9 @@ await using (var scope = app.Services.CreateAsyncScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
+    // Tự động tạo/cập nhật database theo migration cho môi trường máy mới.
+    await context.Database.MigrateAsync();
+
     var managerRoleId = await context.VaiTros
         .Where(v => v.TenVaiTro == "Manager")
         .Select(v => v.MaVaiTro)
