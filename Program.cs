@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Data.SqlClient;
 using QuanLyNhanSu.Data;
 using QuanLyNhanSu.Models;
 using System.Globalization;
@@ -7,12 +8,16 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var defaultLocalDbConnection = "Server=(localdb)\\MSSQLLocalDB;Database=QuanLyNhanSu;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true";
+var configuredConnection = builder.Configuration.GetConnectionString("DefaultConnection") ?? defaultLocalDbConnection;
+var resolvedConnection = await ResolveConnectionStringAsync(configuredConnection, defaultLocalDbConnection);
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 // Entity Framework - SQL Server
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(resolvedConnection));
 
 // Authentication - Cookie
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -142,4 +147,38 @@ static string NormalizeCredentialName(string input)
     }
 
     return builder.ToString().Normalize(NormalizationForm.FormC);
+}
+
+static async Task<string> ResolveConnectionStringAsync(string configuredConnection, string localDbConnection)
+{
+    if (await CanOpenConnectionAsync(configuredConnection))
+        return configuredConnection;
+
+    var usesLocalhost = configuredConnection.Contains("Server=localhost", StringComparison.OrdinalIgnoreCase)
+                        || configuredConnection.Contains("Data Source=localhost", StringComparison.OrdinalIgnoreCase)
+                        || configuredConnection.Contains("Server=.\\", StringComparison.OrdinalIgnoreCase);
+
+    if (usesLocalhost && await CanOpenConnectionAsync(localDbConnection))
+        return localDbConnection;
+
+    return configuredConnection;
+}
+
+static async Task<bool> CanOpenConnectionAsync(string connectionString)
+{
+    try
+    {
+        var builder = new SqlConnectionStringBuilder(connectionString)
+        {
+            ConnectTimeout = 3
+        };
+
+        await using var connection = new SqlConnection(builder.ConnectionString);
+        await connection.OpenAsync();
+        return true;
+    }
+    catch
+    {
+        return false;
+    }
 }
