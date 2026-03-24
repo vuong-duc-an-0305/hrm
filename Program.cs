@@ -79,10 +79,25 @@ await using (var scope = app.Services.CreateAsyncScope())
     // Tự động tạo/cập nhật database theo migration cho môi trường máy mới.
     await context.Database.MigrateAsync();
 
-    var managerRoleId = await context.VaiTros
-        .Where(v => v.TenVaiTro == "Manager")
-        .Select(v => v.MaVaiTro)
-        .FirstOrDefaultAsync();
+    int managerRoleId;
+    try
+    {
+        managerRoleId = await context.VaiTros
+            .Where(v => v.TenVaiTro == "Manager")
+            .Select(v => v.MaVaiTro)
+            .FirstOrDefaultAsync();
+    }
+    catch (SqlException) when (app.Environment.IsDevelopment())
+    {
+        // Trường hợp DB dev bị lệch schema (ví dụ có DB nhưng thiếu bảng), tái tạo lại theo migration.
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.MigrateAsync();
+
+        managerRoleId = await context.VaiTros
+            .Where(v => v.TenVaiTro == "Manager")
+            .Select(v => v.MaVaiTro)
+            .FirstOrDefaultAsync();
+    }
 
     if (managerRoleId > 0)
     {

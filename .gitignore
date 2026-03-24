@@ -1,0 +1,35 @@
+## .NET / ASP.NET Core ##
+
+# Build outputs
+bin/
+obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# User-specific settings & secrets
+appsettings.*.json
+!appsettings.json
+!appsettings.*.json.example
+
+# NuGet packages (restored automatically)
+*.nupkg
+*.nuspec
+packages/
+.nuget/
+
+# Publish output
+publish/
+out/
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
