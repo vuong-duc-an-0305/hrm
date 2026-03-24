@@ -33,9 +33,17 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 // Authorization policies
 builder.Services.AddAuthorization(options =>
 {
+    // Yêu cầu đăng nhập cho toàn bộ app theo mặc định (trừ [AllowAnonymous])
+    options.FallbackPolicy = new Microsoft.AspNetCore.Authorization.AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .Build();
+
     options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
     options.AddPolicy("ManagerOrAdmin", policy => policy.RequireRole("Admin", "Manager"));
-    options.AddPolicy("NotManager", policy => policy.RequireAssertion(context => !context.User.IsInRole("Manager")));
+    // Phải đăng nhập VÀ không phải Manager (Admin + User đều vào được)
+    options.AddPolicy("NotManager", policy => policy.RequireAssertion(context =>
+        context.User.Identity?.IsAuthenticated == true &&
+        !context.User.IsInRole("Manager")));
 });
 
 // Memory Cache
